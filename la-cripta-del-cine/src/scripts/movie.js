@@ -40,8 +40,14 @@ async function load() {
         </div>
       </div>
 
-      <div class="player">
-        <video controls width="720" src="${movie.video}"></video>
+            <div class="player">
+        <h3>Trailer</h3>
+        ${movie.trailer && movie.trailer.type === 'youtube' 
+          ? `<iframe width="720" height="405" src="${movie.trailer.url}" frameborder="0" allowfullscreen></iframe>`
+          : movie.trailer && movie.trailer.type === 'local'
+          ? `<video controls width="720"><source src="${movie.trailer.url}" type="video/mp4">Tu navegador no soporta el elemento video.</video>`
+          : `<video controls width="720" src="${movie.video}"></video>`
+        }
       </div>
 
       <section class="comments-section">
