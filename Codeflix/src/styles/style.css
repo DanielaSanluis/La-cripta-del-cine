@@ -1,597 +1,503 @@
-/* Fuente cinematografica y terror */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Metal+Mania&display=swap'); /* importa fuentes externas */
+/* Fuente cinematográfica */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
 
-/* ===== VARIABLES Y ESTILOS GLOBALES ===== */
-body { /* estilos globales del body */
-  background-color: #000; /* color de fondo base */
-  color: #fff; /* color de texto por defecto */
-  font-family: Arial, sans-serif; /* fuente por defecto */
-  text-align: center; /* centra texto por defecto */
-  margin: 0; /* quitar margen por defecto */
-  padding: 0; /* quitar padding por defecto */
-  padding-top: 120px; /* espacio superior para header fijo */
-  /* MEJORA: Fondo mas oscuro y sutilmente morado */
-  background: linear-gradient(135deg, #000000 0%, #0d001a 50%, #000000 100%); /* degradado sutil */
-  background-attachment: fixed; /* hace que el fondo no se mueva al hacer scroll */
-  min-height: 100vh; /* asegura al menos la altura de la pantalla */
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+
 }
 
-/* Efecto de particulas en el fondo */
-body::before { /* pseudo-elemento para partículas decorativas */
-  content: '';
-  position: fixed; /* fijo en la pantalla */
+header {
+  background: #111;
+  padding: 1rem;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    /* Particulas mas rojas y moradas para terror */
-    radial-gradient(circle at 20% 80%, rgba(184, 107, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 0, 0, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255, 64, 64, 0.08) 0%, transparent 50%);
-  pointer-events: none; /* no interfiere con clicks */
-  z-index: -1; /* detrás del contenido */
 }
 
-/* ===== HEADER STICKY MEJORADO ===== */
-header { /* barra fija superior */
-  background: #111; /* fondo del header */
-  padding: 1rem; /* espacio interno */
-  position: fixed; /* fijo en la parte superior */
-  top: 0;
-  left: 0;
-  width: 100%; /* ocupa todo el ancho */
-  z-index: 1000; /* por encima del resto */
-  border-bottom: 1px solid #333; /* separador inferior */
-  /* Sombra roja suave */
-  box-shadow: 0 2px 20px rgba(255, 0, 0, 0.2); /* sombra decorativa */
-}
-
-.header-container { /* contenedor interno del header */
-  display: flex; /* layout horizontal */
-  /* SOLUCION: Usar space-around para centrar mas el buscador */
-  justify-content: space-around; /* repartir espacio alrededor */
-  align-items: center; /* alinear verticalmente */
-  max-width: 1200px; /* ancho máximo centrado */
-  margin: 0 auto; /* centra horizontalmente */
-  padding: 0 1rem; /* padding lateral */
-}
-
-.header-title { /* estilo del título del header */
-  /* MEJORA: Fuente de terror */
-  font-family: "Metal Mania", serif; /* fuente decorativa */
-  font-size: 2.2rem; /* tamaño del título */
-  /* MEJORA: Degradado rojo/sangre */
-  background: linear-gradient(90deg, #ff0000, #ff4d4d); /* degradado aplicado al texto */
+h1,
+h2 {
+  font-family: "Cinzel", serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #b86bff, #ff7b00);
+  /* Morado → Naranja */
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent; /* hace visible el degradado en el texto */
-  margin: 0; /* sin margen */
-  font-weight: 700; /* negrita */
-  /* MODIFICADO: Sombra suave (Glitch eliminado) */
-  text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); /* pequeño resplandor rojo */
+  color: transparent;
+  /* El degradado se aplica como relleno del texto */
 }
 
-h2 { /* estilo para títulos de secciones */
-  font-family: "Cinzel", serif; /* fuente clásica */
-  text-transform: uppercase; /* mayúsculas */
-  letter-spacing: 1.5px; /* espaciado entre letras */
-  margin: 2rem 0 1rem 0; /* margen arriba y abajo */
-  /* MEJORA: Degradado con rojo y morado */
-  background: linear-gradient(90deg, #b86bff, #ff0000); /* degradado aplicado al texto */
+.codeflix-brand-banner {
+  text-align: center;
+  margin: 2.5rem 0;
+  font-family: "Cinzel", serif;
+  letter-spacing: 2px;
+  font-size: 2rem;
+  color: transparent;
+  background: linear-gradient(90deg, #b86bff, #ff7b00);
   -webkit-background-clip: text;
-  color: transparent; /* texto transparente para mostrar degradado */
-  font-size: 1.5rem; /* tamaño del h2 */
+  font-weight: 700;
 }
 
-.search-container { /* contenedor del input de búsqueda */
-  display: flex; /* layout horizontal */
-  gap: 10px; /* espacio entre elementos */
-  /* SOLUCION: Asegura un ancho minimo para que ocupe espacio y se vea centrado */
-  min-width: 300px; /* ancho mínimo */
-  justify-content: center; /* centrar contenido */
+.codeflix-brand-banner small {
+  display: block;
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 6px;
 }
 
-.search-input { /* estilo base del input (clase no usada directamente en HTML pero preparado) */
-  padding: 10px 15px; /* espacio interno */
-  border-radius: 25px; /* bordes redondeados */
-  border: 1px solid #333; /* borde sutil */
-  background: #000; /* fondo negro */
-  color: #fff; /* texto blanco */
-  width: 100%; /* ancho completo del contenedor */
-  font-size: 0.9rem; /* tamaño de fuente */
-  font-family: Arial, sans-serif; /* familia de fuente */
-  transition: all 0.3s ease; /* transición para focus/hover */
-}
-/* Control de visibilidad de carruseles */
-.pagina-contenido { /* contenedor que se muestra/oculta según la página */
-  transition: all 0.3s ease; /* transición suave */
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem auto;
+  width: 80%;
 }
 
-.search-input:focus { /* estado focus del input */
-  outline: none; /* quita outline por defecto */
-  /* MEJORA: Borde y sombra roja */
-  border-color: #ff0000; /* borde rojo al focus */
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* sombra roja */
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 15px;
+  width: 80%;
+  padding: 10px;
 }
 
-/* ===== CARRUSEL MEJORADO ===== */
-.carousel-wrapper { /* wrapper decorativo del carrusel */
-  position: relative; /* relativo para posicionar flechas */
-  display: flex; /* flex para centrar */
-  align-items: center; /* alinear verticalmente */
-  justify-content: center; /* centrar horizontalmente */
-  margin: 2rem auto; /* separación vertical y centrado */
-  width: 90%; /* ancho del wrapper */
-  background: rgba(17, 17, 17, 0.6); /* fondo semitransparente */
-  border-radius: 20px; /* esquinas redondeadas */
-  padding: 20px; /* padding interno */
-  backdrop-filter: blur(10px); /* desenfoque del fondo detrás */
-  /* MEJORA: Borde con color rojo/advertencia */
-  border: 2px solid rgba(255, 0, 0, 0.2); /* borde decorativo */
-  /* MEJORA: Sombra mas profunda */
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5); /* sombra grande */
+.carousel-container::-webkit-scrollbar {
+  display: none;
+  /* sin scroll visible */
 }
 
-.carousel-container { /* contenedor desplazable del carrusel */
-  display: flex; /* fila de elementos */
-  overflow-x: auto; /* scroll horizontal */
-  scroll-behavior: smooth; /* desplazamiento suave */
-  gap: 15px; /* espacio entre tarjetas */
-  width: 80%; /* ancho relativo */
-  padding: 10px; /* padding interno */
+.carousel-container img {
+  width: 180px;
+  height: 260px;
+  border-radius: 10px;
+  transition: transform 0.3s;
+  cursor: pointer;
 }
 
-.carousel-container::-webkit-scrollbar { /* oculta barra de scroll en WebKit */
-  display: none; /* sin scrollbar visible */
+.carousel-container img:hover {
+  transform: scale(1.1);
 }
 
-.carousel-container img { /* estilo de las portadas en el carrusel */
-  width: 180px; /* ancho fijo */
-  height: 260px; /* alto fijo */
-  border-radius: 10px; /* bordes redondeados */
-  transition: transform 0.3s; /* transición para hover */
-  cursor: pointer; /* cursor mano */
-  border: 2px solid transparent; /* bordes iniciales transparentes */
-  opacity: 0; /* inicialmente ocultas para animación */
-  animation: fadeInUp 0.6s ease forwards; /* animación de entrada */
+.arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s;
 }
 
-.carousel-container img:hover { /* hover en portada */
-  transform: scale(1.1); /* aumenta ligeramente */
+.arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
-.arrow { /* estilo de las flechas de navegación */
-  /* MEJORA: Color rojo/morado para los botones de navegacion */
-  background: rgba(255, 0, 0, 0.2); /* fondo semitransparente rojo */
-  color: white; /* color del icono */
-  border: none; /* sin borde */
-  font-size: 2rem; /* tamaño grande */
-  padding: 10px; /* padding interno */
-  cursor: pointer; /* cursor mano */
-  border-radius: 50%; /* círculo */
-  transition: all 0.3s ease; /* transición */
-  backdrop-filter: blur(5px); /* ligero blur detrás */
+/* layout del carrusel interno: los .card deben alinearse en fila */
+.carousel {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
 }
 
-.arrow:hover { /* hover en flechas */
-  /* MEJORA: Color rojo mas intenso al hover */
-  background: rgba(255, 0, 0, 0.4); /* fondo más intenso */
-  transform: scale(1.1); /* escala al pasar */
+.card {
+  min-width: 180px;
+  /* mismo ancho que las imágenes para que no se colapsen */
+  flex: 0 0 auto;
+  /* evitar que se encojan o expandan */
+  text-align: center;
 }
 
-.carousel { /* fila interna de tarjetas */
-  display: flex; /* layout en fila */
-  gap: 15px; /* espacio entre tarjetas */
-  align-items: flex-start; /* alinear al inicio */
-}
-
-.card { /* tarjeta individual del carrusel */
-  min-width: 180px; /* ancho mínimo */
-  flex: 0 0 auto; /* no se estira */
-  text-align: center; /* centro del texto */
-  position: relative; /* relativo para pseudo-elementos */
-  transition: all 0.3s ease; /* transición general */
-}
-
-.card::after { /* overlay degradado en la tarjeta */
-  content: '';
-  position: absolute; /* absoluto respecto a .card */
-  bottom: 0;
-  left: 0;
+.card img {
   width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* estilos para la página de detalle de película */
+.movie-detail {
+  max-width: 1000px;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  text-align: left;
+}
+
+.movie-detail .back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.movie-detail .meta {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.movie-detail .poster {
+  width: 220px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.movie-detail .info h1 {
+  margin: 0 0 0.5rem 0;
+  color: #ff8080;
+}
+
+.movie-detail .synopsis {
+  color: #ddd;
+}
+
+.tag {
+  background: #222;
+  color: #ffb3b3;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-right: 6px;
+  font-size: 0.9rem;
+}
+
+.player {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.levels {
+  margin-top: 0.6rem;
+  color: #ffd1d1;
+}
+
+.levels strong {
+  color: #fff;
+  margin-right: 4px;
+}
+
+/* Estilos para el terrorímetro en la ficha de película */
+.terrorimeter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0.5rem 0 0.8rem 0;
+}
+
+.terror-bar {
+  width: 220px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.terror-fill {
   height: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 30%); /* degradado para contraste */
-  border-radius: 10px; /* bordes redondeados */
-  opacity: 0; /* inicialmente oculto */
-  transition: opacity 0.3s ease; /* transición de opacidad */
+  background: linear-gradient(90deg, #ff7b00, #b86bff);
+  border-radius: 8px 0 0 8px;
+  transition: width 400ms ease;
 }
 
-.card:hover::after { /* al pasar el ratón mostrar overlay */
-  opacity: 1; /* muestra overlay */
+.terror-score {
+  color: #ffd9d9;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.card img { /* imagen dentro de la tarjeta */
-  width: 100%; /* ocupa todo el ancho de la tarjeta */
-  height: 260px; /* alto fijo */
-  object-fit: cover; /* recorta para cubrir */
-  border-radius: 10px; /* bordes redondeados */
-  border: 2px solid transparent; /* borde inicial */
-  transition: all 0.3s ease; /* transición para efectos */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* sombra sutil */
+/* Estilos para modal de valoración (rating) */
+.rating-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.card:hover img { /* efecto sobre la imagen al pasar */
-  /* MEJORA: Borde y sombra roja en el carrusel */
-  border-color: #ff0000; /* borde rojo */
-  box-shadow: 0 10px 25px rgba(255, 0, 0, 0.5); /* sombra roja grande */
-  transform: perspective(1000px) rotateY(2deg); /* ligera rotación 3D */
+.rating-box {
+  background: #0b0b0b;
+  padding: 18px;
+  border-radius: 8px;
+  width: 320px;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
 }
 
-/* ===== PELICULAS PAGINADAS MEJORADAS ===== */
-.movies-grid { /* grid de películas en la sección "Todas las películas" */
-  display: grid; /* usa grid layout */
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* columnas responsive */
-  gap: 15px; /* gap entre celdas */
-  margin: 1.5rem 0; /* margen vertical */
-  scroll-margin-top: 120px; /* margen al hacer anchor/scroll */
+.rating-box h3 {
+  margin-top: 0;
+  color: #ff9f6b;
 }
 
-.movie-small { /* tarjeta pequeña para listado paginado */
-  cursor: pointer; /* clickable */
-  text-align: center; /* texto centrado */
-  padding: 8px; /* padding interno */
-  background: rgba(255, 255, 255, 0.02); /* muy tenue */
-  border-radius: 8px; /* esquinas redondeadas */
-  transition: all 0.3s ease; /* transición */
-  border: 1px solid transparent; /* borde inicial transparente */
-  position: relative; /* relativo para pseudo-elementos */
-  overflow: hidden; /* recorta contenido sobrante */
+.rating-box label {
+  display: block;
+  margin: 8px 0;
+  font-size: 0.95rem;
 }
 
-.movie-small::before { /* efecto brillante deslizante */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%; /* inicia fuera a la izquierda */
+.rating-box input[type="number"] {
+  width: 64px;
+  margin-left: 8px;
+  padding: 6px;
+  border-radius: 6px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.rating-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.rating-actions button {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.rating-actions #rating-send {
+  background: #ff4040;
+  color: #fff;
+}
+
+.rating-actions #rating-cancel {
+  background: #222;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.simulate-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #333;
+  color: #fff;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
+/* Estilos para control de estrellas */
+.star-rating {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.star {
+  font-size: 1.4rem;
+  color: #444;
+  margin: 0 2px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.star:hover,
+.star:focus {
+  color: #ffb66b;
+  outline: none;
+}
+
+.star.selected {
+  color: #ff9f6b;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+.rating-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.rating-label {
+  width: 120px;
+  color: #ddd;
+}
+
+.comments-section {
+  margin-top: 1.5rem;
+}
+
+.comment {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+}
+
+.comment b {
+  color: #fff;
+}
+
+.comment small {
+  color: #bbb;
+  margin-left: 8px;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.comment-form input,
+.comment-form textarea {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(184, 107, 255, 0.2), transparent); /* franja morada */
-  transition: left 0.6s; /* transición al desplazarse */
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #000;
+  color: #fff;
 }
 
-.movie-small:hover::before { /* al hover desplaza la franja */
-  left: 100%; /* mueve la franja hacia la derecha */
+.comment-form button {
+  width: 120px;
+  padding: 8px;
+  border-radius: 6px;
+  background: #ff4040;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
-.movie-small:hover { /* estilo al pasar por encima */
-  /* MEJORA: Fondo rojo muy tenue al pasar el raton */
-  background: rgba(255, 0, 0, 0.1); /* leve tonalidad roja */
-  /* MEJORA: Borde y sombra roja */
-  border-color: #ff0000; /* borde rojo */
-  transform: translateY(-5px) scale(1.02); /* ligero levantamiento */
-  box-shadow: 0 10px 25px rgba(255, 0, 0, 0.4); /* sombra roja */
+/* Estilos para la lista paginada en la página principal */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 1rem 0;
 }
 
-.movie-small img { /* imagen dentro de la tarjeta pequeña */
-  width: 100%; /* ocupa todo el ancho */
-  height: 200px; /* alto fijo */
-  object-fit: cover; /* recortar para cubrir */
-  border-radius: 6px; /* esquinas redondeadas */
-  transition: transform 0.3s ease; /* transición para hover */
-  opacity: 0; /* inicia invisible para animación */
-  animation: fadeInUp 0.6s ease forwards; /* animación de entrada */
+.movie-small {
+  cursor: pointer;
+  text-align: center;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
 }
 
-.movie-small:hover img { /* hover en la imagen de la tarjeta */
-  transform: scale(1.05); /* ligera ampliación */
+.movie-small img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
-.movie-small-title { /* título dentro de la tarjeta pequeña */
-  margin: 8px 0 0 0; /* margen superior */
-  font-size: 0.95rem; /* tamaño de fuente */
-  color: #fff; /* color blanco */
-  font-weight: bold; /* negrita */
-  transition: color 0.3s ease; /* transición de color */
+.movie-small-title {
+  margin: 6px 0 0 0;
+  font-size: 0.95rem;
+  color: #fff;
 }
 
-.movie-small:hover .movie-small-title { /* cambia color del título al hover */
-  /* MEJORA: Titulo en rojo vivo */
-  color: #ff0000; /* rojo vivo */
+.pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 1.2rem;
 }
 
-/* ===== PAGINACION MEJORADA ===== */
-.pagination { /* contenedor de paginación */
-  display: flex; /* layout horizontal */
-  gap: 8px; /* espacio entre botones */
-  justify-content: center; /* centrar */
-  margin-bottom: 1.5rem; /* margen inferior */
-  padding: 1rem; /* padding interno */
-  background: rgba(17, 17, 17, 0.8); /* fondo semitransparente */
-  border-radius: 15px; /* bordes redondeados */
-  backdrop-filter: blur(10px); /* desenfoque del fondo */
+.page-btn {
+  padding: 6px 10px;
+  background: #111;
+  color: #fff;
+  border-radius: 6px;
+  border: 1px solid #333;
+  cursor: pointer;
 }
 
-.page-btn { /* estilo de botones de página */
-  padding: 10px 16px; /* padding */
-  background: rgba(255, 255, 255, 0.05); /* fondo tenue */
-  color: #fff; /* color texto */
-  border-radius: 8px; /* bordes */
-  border: 1px solid #333; /* borde sutil */
-  cursor: pointer; /* cursor mano */
-  transition: all 0.3s ease; /* transición */
-  font-weight: bold; /* negrita */
-  position: relative; /* relativo para pseudo-elementos */
-  overflow: hidden; /* recorta pseudo-elementos */
+.page-btn[disabled] {
+  opacity: 0.4;
+  cursor: default;
 }
 
-
-
-.page-btn:hover::before { /* pseudo para efecto hover */
-  left: 100%; /* mueve pseudo a la derecha */
+.page-btn.active {
+  background: #ff4040;
+  border-color: #ff4040;
 }
 
-.page-btn:hover:not([disabled]) { /* hover activo (no deshabilitado) */
-  /* MEJORA: Degradado rojo/morado */
-  background: linear-gradient(135deg, #ff0000, #b86bff); /* degradado al hover */
-  border-color: transparent; /* quita borde */
-  transform: translateY(-3px); /* levanta el botón */
-  /* MEJORA: Sombra roja */
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4); /* sombra roja */
+/* estilo del formulario*/
+.about-section {
+  padding: 50px 20px;
+  background: #0b0010;
+  text-align: center;
+  border-top: 2px solid #3a003a;
 }
 
-.page-btn[disabled] { /* estilo para botones deshabilitados */
-  opacity: 0.4; /* semitransparente */
-  cursor: default; /* cursor por defecto */
-  transform: none !important; /* sin transform */
+.about-section h2 {
+  color: #ff2e93;
+  margin-bottom: 30px;
 }
 
-.page-btn.active { /* estilo para botón de página activo */
-  /* MEJORA: Degradado rojo/morado para el activo */
-  background: linear-gradient(135deg, #ff0000, #b86bff); /* fondo degradado */
-  border-color: transparent; /* sin borde */
-  /* MEJORA: Sombra roja */
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); /* resplandor */
-  transform: scale(1.1); /* tamaño mayor */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-/* ===== DETALLE DE PELICULA (Estilos de terror aplicados) ===== */
-.movie-detail { /* contenedor del detalle de película */
-  max-width: 1000px; /* ancho máximo */
-  margin: 1.5rem auto; /* centrado y separación */
-  padding: 1rem; /* padding interno */
-  text-align: left; /* alineación de texto */
+.about-card {
+  background: rgba(20, 0, 25, 0.85);
+  border: 1px solid #550055;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
 }
 
-.movie-detail .back { /* estilo del enlace volver */
-  display: inline-block; /* inline-block para margen */
-  margin-bottom: 0.5rem; /* separación inferior */
-  color: #ff0000; /* Color rojo */
-  text-decoration: none; /* sin subrayado */
-  font-weight: bold; /* negrita */
+.about-card h3 {
+  color: #ff2e93;
+  margin-bottom: 10px;
 }
 
-.movie-detail .back:hover { /* hover en volver */
-  color: #b86bff; /* color morado al pasar */
+.about-card p {
+  color: #ddd;
+  line-height: 1.5;
 }
 
-.movie-detail .meta { /* contenedor meta (poster + info) */
-  display: flex; /* layout horizontal */
-  gap: 1rem; /* espacio entre elementos */
-  align-items: flex-start; /* alinear al comienzo */
+.contact-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-.movie-detail .poster { /* estilo del poster */
-  width: 220px; /* ancho */
-  height: 320px; /* alto */
-  object-fit: cover; /* recorta para cubrir */
-  border-radius: 6px; /* bordes redondeados */
-  border: 2px solid #333; /* borde oscuro */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  background: #140016;
+  color: #fff;
+  border: 1px solid #6a006a;
+  border-radius: 6px;
+  padding: 8px;
 }
 
-.movie-detail .info h1 { /* título dentro de info */
-  margin: 0 0 0.5rem 0; /* margen inferior */
-  color: #ff0000; /* Color rojo consistente */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #ff2e93;
+  box-shadow: 0 0 3px #ff2e93;
 }
 
-.movie-detail .synopsis { /* sinopsis */
-  color: #ddd; /* color gris claro */
-  line-height: 1.6; /* interlineado */
+.contact-form button {
+  background: #ff2e93;
+  color: #0b0010;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-.tag { /* estilo para etiquetas/tags */
-  background: #111; /* fondo oscuro */
-  color: #b86bff; /* color morado */
-  padding: 4px 12px; /* padding */
-  border-radius: 12px; /* bordes redondeados */
-  margin-right: 6px; /* separación derecha */
-  font-size: 0.9rem; /* tamaño */
-  border: 1px solid #333; /* borde sutil */
-}
-
-.levels { /* contenedor de niveles gore/scares */
-  margin-top: 0.6rem; /* separación superior */
-  color: #ddd; /* color gris claro */
-}
-
-.levels strong { /* estilo para etiquetas fuertes dentro de levels */
-  color: #ff0000; /* Color rojo */
-  margin-right: 4px; /* separación derecha */
-}
-
-.comments-section { /* sección de comentarios */
-  margin-top: 1.5rem; /* separación superior */
-  border-top: 1px solid #333; /* separador superior */
-  padding-top: 1rem; /* padding superior */
-}
-
-.comment { /* caja de comentario individual */
-  background: rgba(255, 255, 255, 0.03); /* fondo tenue */
-  padding: 0.8rem; /* padding interno */
-  border-radius: 6px; /* bordes redondeados */
-  margin-bottom: 0.8rem; /* separación inferior */
-  border-left: 3px solid #ff0000; /* Borde lateral rojo */
-}
-
-.comment b { /* autor del comentario */
-  color: #ff0000; /* Color rojo */
-}
-
-.comment small { /* fecha del comentario */
-  color: #bbb; /* gris */
-  margin-left: 8px; /* separación izquierda */
-}
-
-.comment-form { /* formulario de comentario */
-  display: flex; /* layout vertical */
-  flex-direction: column; /* columna */
-  gap: 0.8rem; /* espacio entre campos */
-  margin-top: 1rem; /* separación superior */
-}
-
-.comment-form input, 
-.comment-form textarea { /* estilos compartidos para inputs del formulario */
-  width: 100%; /* ancho completo */
-  padding: 10px; /* padding interno */
-  border-radius: 6px; /* bordes redondeados */
-  border: 1px solid #333; /* borde */
-  background: #000; /* fondo negro */
-  color: #fff; /* texto blanco */
-  font-family: Arial, sans-serif; /* familia */
-}
-
-.comment-form input:focus,
-.comment-form textarea:focus { /* focus en campos del formulario */
-  outline: none; /* quita outline */
-  border-color: #ff0000; /* Borde rojo al focus */
-}
-
-.comment-form button { /* botón de enviar comentario */
-  width: 140px; /* ancho fijo */
-  padding: 10px; /* padding */
-  border-radius: 6px; /* bordes */
-  background: linear-gradient(90deg, #ff0000, #b86bff); /* Degradado rojo/morado */
-  color: #fff; /* texto blanco */
-  border: none; /* sin borde */
-  cursor: pointer; /* cursor mano */
-  font-weight: bold; /* negrita */
-  transition: transform 0.2s; /* transición */
-}
-
-.comment-form button:hover { /* hover en botón */
-  transform: translateY(-2px); /* ligera elevación */
-}
-
-/* ===== FOOTER MEJORADO ===== */
-.codeflix-footer { /* estilo del footer */
-  background: linear-gradient(180deg, transparent 0%, #111 100%); /* degradado sutil */
-  padding: 2rem 1rem; /* padding */
-  margin-top: 3rem; /* separación superior */
-  color: #bbb; /* color texto */
-  font-size: 0.9rem; /* tamaño fuente */
-  border-top: 1px solid rgba(255, 0, 0, 0.3); /* Borde superior rojo */
-  position: relative; /* relativo para pseudo */
-}
-
-.codeflix-footer::before { /* línea decorativa en el footer */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px; /* ancho de la línea */
-  height: 1px; /* alto */
-  background: linear-gradient(90deg, transparent, #ff0000, #b86bff, transparent); /* Linea decorativa roja/morada */
-}
-
-.codeflix-footer span { /* span dentro del footer */
-  color: #ff0000; /* Color rojo */
-  font-weight: bold; /* negrita */
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* resplandor */
-}
-
-/* ===== ANIMACIONES GENERALES ===== */
-@keyframes fadeInUp { /* animación para la aparición con desplazamiento */
-  from {
-    opacity: 0; /* inicio invisible */
-    transform: translateY(20px); /* desplazado hacia abajo */
-  }
-  to {
-    opacity: 1; /* final visible */
-    transform: translateY(0); /* en su posición */
-  }
-}
-
-.movie-small:nth-child(1) img { animation-delay: 0.1s; } /* retraso animación 1 */
-.movie-small:nth-child(2) img { animation-delay: 0.2s; } /* retraso animación 2 */
-.movie-small:nth-child(3) img { animation-delay: 0.3s; } /* retraso animación 3 */
-.movie-small:nth-child(4) img { animation-delay: 0.4s; } /* retraso animación 4 */
-.movie-small:nth-child(5) img { animation-delay: 0.5s; } /* retraso animación 5 */
-
-
-/* ======================================= */
-/* ===== ANIMACION PUERTAS DE CRIPTA ===== */
-/* ======================================= */
-
-/* Capa principal que cubre toda la pantalla */
-.crypt-door-overlay { /* overlay que simula puertas cerradas al cargar */
-  position: fixed; /* fija en pantalla */
-  top: 0;
-  left: 0;
-  width: 100%; /* ocupa todo el ancho */
-  height: 100%; /* ocupa toda la altura */
-  z-index: 9999; /* Asegura que cubra todo */
-  display: flex; /* contenedor flex para las mitades */
-  overflow: hidden; /* evita scroll dentro */
-  pointer-events: all; /* captura eventos mientras esté visible */
-  background: #000; /* fondo negro */
-}
-
-/* Las dos mitades de la puerta */
-.door-half { /* cada mitad de la puerta */
-  width: 50%; /* la mitad del ancho */
-  height: 100%; /* altura completa */
-  background-color: #1a1a1a; /* Gris oscuro para simular piedra/metal */
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9); /* sombra interna */
-  /* Transicion de 2s para la apertura, 0.5s de desvanecimiento despues de 2s */
-  transition: transform 2s ease-in-out, opacity 0.5s 2s; /* transición para transform y opacidad */
-  
-  /* MEJORA DE ESTILO: Textura de piedra/metal */
-  background-image: repeating-linear-gradient(-45deg, #1f1f1f, #1f1f1f 4px, #1a1a1a 4px, #1a1a1a 8px); /* textura repetida */
-  border: 1px solid #0a0a0a; /* borde oscuro */
-}
-
-/* Efecto visual de la abertura al final */
-.crypt-door-overlay.open { /* estado abierto */
-  opacity: 0; /* hacerlo transparente */
-  pointer-events: none; /* no intercepta eventos */
-}
-
-/* Animacion de apertura */
-.crypt-door-overlay.open .left-half { /* cuando se abre, la mitad izquierda se desplaza */
-  transform: translateX(-100%); /* La mitad izquierda se va completamente a la izquierda */
-}
-
-.crypt-door-overlay.open .right-half { /* cuando se abre, la mitad derecha se desplaza */
-  transform: translateX(100%); /* La mitad derecha se va completamente a la derecha */
-}
-
-/* Estilo del logo o manija al centro */
-.door-logo { /* logo central sobre la puerta */
-  position: absolute; /* absoluto centrado */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* centrar exactamente */
-  font-family: "Metal Mania", serif; /* fuente decorativa */
-  font-size: 3rem; /* tamaño grande */
-  color: #ff0000; /* Rojo sangre */
-  text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /* resplandor rojo */
-  opacity: 1; /* visible por defecto */
-  transition: opacity 0.5s 1.5s; /* transición de opacidad con retraso */
-  z-index: 10000; /* por encima de todo */
-}
-
-/* Desaparece el logo cuando se abre */
-.crypt-door-overlay.open .door-logo {
-  opacity: 0; /* ocultar logo en estado abierto */
+.contact-message {
+  color: #8affd1;
+  margin-top: 5px;
+  min-height: 18px;
 }
