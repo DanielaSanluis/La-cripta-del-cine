@@ -1,24 +1,24 @@
 // Función asíncrona que realiza una petición fetch a la URL dada y devuelve el JSON recibido
-async function fetchJSON(url) {
+async function fetchJSON(url) { // realiza fetch y retorna JSON
   // usamos fetch para obtener la respuesta
-  const r = await fetch(url);
+  const r = await fetch(url); // petición HTTP a la URL indicada
   // parseamos la respuesta como JSON y la devolvemos
-  return r.json();
+  return r.json(); // devuelve el body parseado como JSON
 }
 
 // Objeto que representa los parámetros de consulta (?id=...) de la URL
-const params = new URLSearchParams(location.search);
+const params = new URLSearchParams(location.search); // parsea los query params de la URL
 // Extrae el valor del parámetro "id" (identificador de la película a mostrar)
-const id = params.get("id");
+const id = params.get("id"); // id de la película extraído del query string
 
 // Función principal que carga los datos de la película y renderiza la página
-async function load() {
+async function load() { // carga y renderiza la vista de detalle
   // Solicita al servidor los datos de la película usando el id obtenido
-  const movie = await fetchJSON(`/api/movies/${id}`);
+  const movie = await fetchJSON(`/api/movies/${id}`); // petición a la API con el id
   // Si no existe la película, mostramos un mensaje y salimos
   if (!movie) {
-    document.getElementById("movie-container").innerHTML = "<p>Película no encontrada</p>";
-    return;
+    document.getElementById("movie-container").innerHTML = "<p>Película no encontrada</p>"; // mensaje de error
+    return; // sale de la función
   }
   // Construye el HTML de detalle de la película (poster, información, video y comentarios)
   // A continuación mostramos también los niveles de "gore" y "miedo" (scares) si existen
@@ -64,59 +64,59 @@ async function load() {
         </div>
       </section>
     </div>
-  `;
+  `; // FIN del template literal con el HTML de la película
 
   // Agrega un listener al botón "Enviar" para procesar el nuevo comentario
-  document.getElementById("send").addEventListener("click", addComment);
+  document.getElementById("send").addEventListener("click", addComment); // vincula handler de envío
 }
 
 // Función que recoge los valores del formulario y envía el comentario al servidor
-async function addComment() {
+async function addComment() { // toma datos del formulario y hace POST para crear comentario
   // Obtiene y limpia el valor del campo nombre
-  const user = document.getElementById("user").value.trim();
+  const user = document.getElementById("user").value.trim(); // nombre del usuario
   // Obtiene y limpia el valor del campo texto del comentario
-  const text = document.getElementById("text").value.trim();
+  const text = document.getElementById("text").value.trim(); // texto del comentario
   // Validación simple: ambos campos son obligatorios
-  if (!user || !text) { alert("Completa nombre y comentario"); return; }
+  if (!user || !text) { alert("Completa nombre y comentario"); return; } // valida campos
 
   // Enviar la petición POST al servidor para guardar el comentario (endpoint /api/movies/:id/comment)
-  const res = await fetch(`/api/movies/${id}/comment`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+  const res = await fetch(`/api/movies/${id}/comment`, { // realiza POST al endpoint de comentarios
+    method: "POST", // método HTTP
+    headers: { "Content-Type": "application/json" }, // indica JSON en body
     // cuerpo con los campos del comentario serializado a JSON
-    body: JSON.stringify({ user, text })
+    body: JSON.stringify({ user, text }) // envía objeto {user, text}
   });
 
   // Si la respuesta no es OK, mostramos un error (intenta parsear el JSON de error si existe)
   if (!res.ok) {
-    const err = await res.json().catch(()=>null);
-    alert(err && err.error ? `Error: ${err.error}` : "Error al enviar el comentario");
-    return;
+    const err = await res.json().catch(()=>null); // intenta parsear error
+    alert(err && err.error ? `Error: ${err.error}` : "Error al enviar el comentario"); // mensaje al usuario
+    return; // sale si hubo error
   }
 
   // Si todo fue bien, limpiar el formulario
-  document.getElementById("user").value = "";
-  document.getElementById("text").value = "";
+  document.getElementById("user").value = ""; // limpia campo user
+  document.getElementById("text").value = ""; // limpia campo text
   // Recargar el detalle para mostrar el nuevo comentario (vuelve a llamar a load)
-  load();
+  load(); // recarga la vista para reflejar el comentario nuevo
 }
 
 // Utilidad: escapar caracteres especiales en un string para evitar inyección HTML
-function escapeHtml(s){
-  if (!s) return '';
+function escapeHtml(s){ // reemplaza caracteres que podrían romper HTML
+  if (!s) return ''; // si es falsy, devuelve cadena vacía
   return String(s)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+    .replace(/&/g,'&amp;') // escapa &
+    .replace(/</g,'&lt;') // escapa <
+    .replace(/>/g,'&gt;') // escapa >
+    .replace(/"/g,'&quot;') // escapa "
+    .replace(/'/g,'&#39;'); // escapa '
 }
 
 // Utilidad: formatea una fecha ISO u otro valor como fecha legible localmente
-function formatDate(d){
-  if (!d) return '';
-  try { const dt = new Date(d); return dt.toLocaleString(); } catch(e){ return d; }
+function formatDate(d){ // formatea fecha a formato local legible
+  if (!d) return ''; // si no hay fecha, devuelve vacía
+  try { const dt = new Date(d); return dt.toLocaleString(); } catch(e){ return d; } // intenta formatear
 }
 
 // Llamada inicial para cargar la página cuando se carga el script
-load();
+load(); // ejecuta la carga inicial
