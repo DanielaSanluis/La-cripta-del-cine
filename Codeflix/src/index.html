@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>CodeFlix</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header>
+    <h1>CodeFlix</h1>
+    <div class="search-row">
+      <input id="search" placeholder="Buscar por título o descripción..." />
+      <div id="filters-inline">
+        <label>Gore ≥ <select id="filter-gore"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+        <label>Miedo ≥ <select id="filter-scares"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+        <label>Jumps ≥ <select id="filter-jumps"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+        <label>Suspenso ≥ <select id="filter-suspense"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+      </div>
+      <div class="tags-inline">
+        <button id="tags-toggle" class="tags-toggle">Seleccionar por tags <span class="arrow">▾</span></button>
+        <div id="tags-container" class="tags-container hidden">
+          <div id="tags-list" class="tags-list">Cargando tags...</div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section id="filters-panel" class="filters-panel">
+    <div class="filters-left">
+      <h3>&nbsp;</h3>
+    </div>
+    <div class="filters-right">
+      <div id="results-summary">Se encontraron <span id="results-count">0</span> películas <button id="clear-filters" class="clear-filters">Limpiar filtros</button></div>
+    </div>
+  </section>
+
+  <main>
+    <h2>🎥 Películas Recomendadas</h2>
+    <div class="carousel-wrapper">
+      <button class="arrow left" data-carousel="recommended">❮</button>
+      <div class="carousel-container" id="carousel-recommended"></div>
+      <button class="arrow right" data-carousel="recommended">❯</button>
+    </div>
+
+    <h2> Favoritas de Japón</h2>
+    <div class="carousel-wrapper">
+      <button class="arrow left" data-carousel="favoritesJapan">❮</button>
+      <div class="carousel-container" id="carousel-favoritesJapan"></div>
+      <button class="arrow right" data-carousel="favoritesJapan">❯</button>
+    </div>
+
+    <!-- Después de las secciones existentes -->
+<h2> Terror Coreano</h2>
+<div class="carousel-wrapper">
+  <button class="arrow left" data-carousel="koreanHorror">❮</button>
+  <div class="carousel-container" id="carousel-koreanHorror"></div>
+  <button class="arrow right" data-carousel="koreanHorror">❯</button>
+</div>
+
+<h2> Cine Extremo Francés</h2>
+<div class="carousel-wrapper">
+  <button class="arrow left" data-carousel="frenchExtreme">❮</button>
+  <div class="carousel-container" id="carousel-frenchExtreme"></div>
+  <button class="arrow right" data-carousel="frenchExtreme">❯</button>
+</div>
+    
+    <h2> Favoritas de España</h2>
+    <div class="carousel-wrapper">
+      <button class="arrow left" data-carousel="favoritesSpain">❮</button>
+      <div class="carousel-container" id="carousel-favoritesSpain"></div>
+      <button class="arrow right" data-carousel="favoritesSpain">❯</button>
+    </div>
+
+    <h2> Favoritas de USA</h2>
+    <div class="carousel-wrapper">
+      <button class="arrow left" data-carousel="favoritesUSA">❮</button>
+      <div class="carousel-container" id="carousel-favoritesUSA"></div>
+      <button class="arrow right" data-carousel="favoritesUSA">❯</button>
+    </div>
+
+    <!-- Sección con todas las películas paginadas (solo imagen + título) -->
+    <section id="all-movies">
+      <h2>Todas las películas</h2>
+      <div id="movies-grid" class="movies-grid"></div>
+      <div id="movies-pagination" class="pagination"></div>
+    </section>
+
+    <!-- Sección Quiénes somos / Visión / Contacto -->
+    <section id="about-section" class="about-section">
+      <h2>Sobre Nosotros</h2>
+
+      <div class="about-grid">
+
+        <article class="about-card">
+          <h3>¿Quiénes somos?</h3>
+          <p>
+            Somos un equipo apasionado por el cine de terror. Creamos La Cripta del Cine
+            como un proyecto para explorar, catalogar y compartir lo mejor del horror en todas sus vertientes.
+          </p>
+        </article>
+
+        <article class="about-card">
+          <h3>Nuestra visión</h3>
+          <p>
+            Queremos construir un espacio donde cualquier fan del terror pueda descubrir nuevas películas,
+            conocer clásicos, explorar subgéneros y disfrutar de un catálogo seleccionado cuidadosamente.
+          </p>
+        </article>
+
+        <article class="about-card">
+          <h3>Contacto</h3>
+          
+          <form id="contactForm" class="contact-form">
+            <label>
+              Nombre:
+              <input type="text" name="name" required>
+            </label>
+            <label>
+              Correo electrónico:
+              <input type="email" name="email" required>
+            </label>
+            <label>
+              Mensaje:
+              <textarea name="message" rows="4" required></textarea>
+            </label>
+            
+            <button type="submit">Enviar</button>
+            <p id="contactMessage" class="contact-message"></p>
+          </form>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

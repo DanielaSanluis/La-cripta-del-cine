@@ -1,0 +1,1554 @@
+[
+  {
+    "id": 1,
+    "title": "El Conjuro",
+    "year": 2013,
+    "country": "EE.UU.",
+    "poster": "images/conjuro.png",
+    "video": "/videos/conjuro.mp4",
+    "synopsis": "Una familia es acosada por una presencia oscura...",
+    "tags": [
+      "posesiones",
+      "basada en hechos reales"
+    ],
+    "gore": 4,
+    "scares": 4.7,
+    "subgenre": "Sobrenatural",
+    "comments": [
+      {
+        "user": "Ana",
+        "text": "Me encantó la atmósfera.",
+        "date": "2025-11-10 18:00"
+      },
+      {
+        "user": "luyi",
+        "text": "prueba de comentarios",
+        "date": "2025-11-11T02:46:47.368Z"
+      }
+    ],
+    "jumpscares": 4.7,
+    "suspense": 4.3,
+    "gore_count": 3,
+    "scares_count": 3,
+    "jumps_count": 3,
+    "suspense_count": 3
+  },
+  {
+    "id": 2,
+    "title": "Saw",
+    "year": 2004,
+    "country": "EE.UU.",
+    "poster": "images/saw.png",
+    "video": " videos/saw.mp4",
+    "synopsis": "Dos hombres despiertan encadenados en un baño...",
+    "tags": [
+      "trampas",
+      "suspenso"
+    ],
+    "gore": 3.1,
+    "scares": 2.2,
+    "subgenre": "Gore",
+    "comments": [],
+    "jumpscares": 3.1,
+    "suspense": 2.2,
+    "gore_count": 41,
+    "scares_count": 41,
+    "jumps_count": 41,
+    "suspense_count": 41
+  },
+  {
+    "id": 3,
+    "title": "Ringu",
+    "year": 1998,
+    "country": "Japón",
+    "poster": "images/ringu.jpg",
+    "trailer": {
+      "type": "local",
+      "url": "videos/trailers/ringu.mp4",
+      "format": "mp4"
+    },
+    "synopsis": "Una cinta maldita hace que quien la ve muera en siete días.",
+    "tags": [
+      "maldiciones",
+      "japonés",
+      "clásico"
+    ],
+    "gore": 2.6,
+    "scares": 2.7,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 2.7,
+    "suspense": 2.7,
+    "gore_count": 10,
+    "scares_count": 10,
+    "jumps_count": 10,
+    "suspense_count": 10
+  },
+  {
+    "id": 4,
+    "title": "Ju-On: The Grudge",
+    "year": 2002,
+    "country": "Japón",
+    "poster": "images/juon.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_JUON",
+    "synopsis": "Una maldición mortal se propaga a quien entra en una casa embrujada donde ocurrió un terrible asesinato.",
+    "tags": [
+      "maldiciones",
+      "sobrenatural",
+      "fantasmas"
+    ],
+    "gore": 3,
+    "scares": 5,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 5,
+    "title": "Dark Water",
+    "year": 2002,
+    "country": "Japón",
+    "poster": "images/dark_water.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_DARK_WATER",
+    "synopsis": "Una madre soltera y su hija se mudan a un apartamento donde agua negra gotea del techo y aparecen fenómenos sobrenaturales.",
+    "tags": [
+      "fantasmas",
+      "agua",
+      "sobrenatural"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 6,
+    "title": "Kwaidan",
+    "year": 1964,
+    "country": "Japón",
+    "poster": "images/kwaidan.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_KWAIDAN",
+    "synopsis": "Cuatro historias de fantasmas basadas en el folclore japonés, filmadas con una estética visual impresionante.",
+    "tags": [
+      "antología",
+      "folclore",
+      "clásico"
+    ],
+    "gore": 2,
+    "scares": 3,
+    "subgenre": "Folclórico",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 7,
+    "title": "Audition",
+    "year": 1999,
+    "country": "Japón",
+    "poster": "images/audition.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_AUDITION",
+    "synopsis": "Un viudo organiza una audición falsa para encontrar nueva esposa, pero encuentra a una mujer con un pasado siniestro.",
+    "tags": [
+      "psicológico",
+      "tortura",
+      "venganza"
+    ],
+    "gore": 5,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 8,
+    "title": "Pulse (Kairo)",
+    "year": 2001,
+    "country": "Japón",
+    "poster": "images/pulse.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_PULSE",
+    "synopsis": "Un grupo de jóvenes descubre un sitio web misterioso que predice sus muertes mientras fantasmas invaden el mundo real.",
+    "tags": [
+      "tecnología",
+      "fantasmas",
+      "apocalíptico"
+    ],
+    "gore": 2,
+    "scares": 5,
+    "subgenre": "Tecnológico",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 9,
+    "title": "Cure",
+    "year": 1997,
+    "country": "Japón",
+    "poster": "images/cure.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_CURE",
+    "synopsis": "Un detective investiga una serie de asesinatos idénticos cometidos por personas diferentes sin motivo aparente.",
+    "tags": [
+      "psicológico",
+      "policial",
+      "hipnosis"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 10,
+    "title": "Tomie",
+    "year": 1999,
+    "country": "Japón",
+    "poster": "images/tomie.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_TOMIE",
+    "synopsis": "Una bella e inmortal mujer regresa de la muerte para obsesionar y enloquecer a quienes la rodean.",
+    "tags": [
+      "sobrenatural",
+      "venganza",
+      "inmortalidad"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 11,
+    "title": "Tokyo Gore Police",
+    "year": 2008,
+    "country": "Japón",
+    "poster": "images/tokyo_gore_police.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_TOKYO_GORE",
+    "synopsis": "En un Tokio futurista, una unidad de policía especial lucha contra mutantes que desarrollan armas orgánicas de sus heridas.",
+    "tags": [
+      "body horror",
+      "cyberpunk",
+      "extremo",
+      "punk"
+    ],
+    "gore": 5,
+    "scares": 3,
+    "subgenre": "Body Horror",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 12,
+    "title": "House (Hausu)",
+    "year": 1977,
+    "country": "Japón",
+    "poster": "images/hausu.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_HAUSU",
+    "synopsis": "Un grupo de escolares visita una casa embrujada que cobra vida con efectos visuales surrealistas y aterradores.",
+    "tags": [
+      "surrealista",
+      "fantasmas",
+      "experimental"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Surrealista",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 12,
+    "title": "Creepy",
+    "year": 2016,
+    "country": "Japón",
+    "poster": "images/creepy.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_CREEPY",
+    "synopsis": "Un exprofiler de la policía sospecha que su misterioso vecino es un peligroso psicópata en este thriller psicológico.",
+    "tags": [
+      "psicológico",
+      "thriller",
+      "vecinos",
+      "suspenso"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 13,
+    "title": "Kuroneko",
+    "year": 1968,
+    "country": "Japón",
+    "poster": "images/kuroneko.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_KURONEKO",
+    "synopsis": "Dos mujeres violadas y asesinadas por samuráis regresan como fantasmas vengativos en forma de gatos.",
+    "tags": [
+      "fantasmas",
+      "venganza",
+      "samuráis"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Folclórico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 14,
+    "title": "Seance",
+    "year": 2000,
+    "country": "Japón",
+    "poster": "images/seance.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_SEANCE",
+    "synopsis": "Un médium y su esposo se ven envueltos en la desaparición de una niña y fenómenos sobrenaturales.",
+    "tags": [
+      "mediums",
+      "secuestro",
+      "sobrenatural"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 15,
+    "title": "Re-cycle",
+    "year": 2006,
+    "country": "Japón",
+    "poster": "images/re_cycle.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_RECYCLE",
+    "synopsis": "Una escritora de novelas de terror es transportada a un mundo alterno habitado por sus personajes descartados.",
+    "tags": [
+      "surrealista",
+      "dimensión",
+      "fantasía"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Surrealista",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 16,
+    "title": "Infection (Kansen)",
+    "year": 2004,
+    "country": "Japón",
+    "poster": "images/infection.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_INFECTION",
+    "synopsis": "En un hospital, un error médico desencadena una infección sobrenatural que afecta a pacientes y staff.",
+    "tags": [
+      "hospital",
+      "virus",
+      "sobrenatural"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Virus",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 17,
+    "title": "Ju-On 2",
+    "year": 2003,
+    "country": "Japón",
+    "poster": "images/juon2.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_JUON2",
+    "synopsis": "La maldición de la casa Saeki se expande afectando a nuevos personajes en esta secuela directa.",
+    "tags": [
+      "maldiciones",
+      "fantasmas",
+      "secuela"
+    ],
+    "gore": 3,
+    "scares": 5,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 18,
+    "title": "Exte: Hair Extensions",
+    "year": 2007,
+    "country": "Japón",
+    "poster": "images/exte.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_EXTE",
+    "synopsis": "Extensiones de cabello poseídas por el espíritu vengativo de una mujer muerta cobran vida propia.",
+    "tags": [
+      "body horror",
+      "venganza",
+      "cabello"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Body Horror",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 19,
+    "title": "Gozu",
+    "year": 2003,
+    "country": "Japón",
+    "poster": "images/gozu.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_GOZU",
+    "synopsis": "Un yakuza debe deshacerse de su hermano loco, pero el viaje se convierte en una pesadilla surrealista.",
+    "tags": [
+      "surrealista",
+      "yakuza",
+      "bizarro"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Surrealista",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 20,
+    "title": "Retribution",
+    "year": 2006,
+    "country": "Japón",
+    "poster": "images/retribution.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_RETRIBUTION",
+    "synopsis": "Un detective investiga asesinatos mientras es acosado por el fantasma de una mujer de rojo.",
+    "tags": [
+      "fantasmas",
+      "policial",
+      "venganza"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 21,
+    "title": "Sadako vs. Kayako",
+    "year": 2016,
+    "country": "Japón",
+    "poster": "images/sadako_vs_kayako.png",
+    "trailer": "https://www.youtube.com/embed/CODIGO_SADAKO_VS_KAYAKO",
+    "synopsis": "Crossover épico donde las dos maldiciones más famosas del cine japonés se enfrentan entre sí.",
+    "tags": [
+      "crossover",
+      "maldiciones",
+      "fantasmas"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Crossover",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 22,
+    "title": "Onibaba",
+    "year": 1964,
+    "country": "Japón",
+    "poster": "images/onibaba.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_ONIBABA",
+    "synopsis": "En el Japón medieval, una mujer y su nuera sobreviven asesinando samuráis hasta que un vecino regresa con una máscara misteriosa.",
+    "tags": [
+      "medieval",
+      "samuráis",
+      "sobrenatural"
+    ],
+    "gore": 1.8,
+    "scares": 1.7,
+    "subgenre": "Folclórico",
+    "comments": [],
+    "jumpscares": 1.6,
+    "suspense": 1.8,
+    "gore_count": 22,
+    "scares_count": 22,
+    "jumps_count": 22,
+    "suspense_count": 22
+  },
+  {
+    "id": 23,
+    "title": "Uzumaki",
+    "year": 2000,
+    "country": "Japón",
+    "poster": "images/uzumaki.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_UZUMAKI",
+    "synopsis": "Un pueblo es consumido por una obsesión colectiva con los espirales, llevando a sus habitantes a la locura.",
+    "tags": [
+      "surrealista",
+      "body horror",
+      "manga"
+    ],
+    "gore": 1.3,
+    "scares": 1.3,
+    "subgenre": "Surrealista",
+    "comments": [],
+    "jumpscares": 1.3,
+    "suspense": 1.3,
+    "gore_count": 10,
+    "scares_count": 10,
+    "jumps_count": 10,
+    "suspense_count": 10
+  },
+  {
+    "id": 24,
+    "title": "Marebito",
+    "year": 2004,
+    "country": "Japón",
+    "poster": "images/marebito.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_MAREBITO",
+    "synopsis": "Un videógrafo obsesionado con el miedo desciende a un mundo subterráneo donde encuentra a una criatura muda.",
+    "tags": [
+      "psicológico",
+      "urbano",
+      "criaturas"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 25,
+    "title": "Eyes of the Spider",
+    "year": 1998,
+    "country": "Japón",
+    "poster": "images/eyes_spider.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_EYES_SPIDER",
+    "synopsis": "Un hombre común se ve arrastrado hacia la violencia y el crimen organizado en esta exploración del lado oscuro humano.",
+    "tags": [
+      "policial",
+      "yakuza",
+      "violento"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Thriller",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 26,
+    "title": "The Wailing",
+    "year": 2016,
+    "country": "Corea",
+    "poster": "images/the_wailing.jpg",
+    "trailer": {
+      "type": "local",
+      "url": "videos/trailers/the_wailing.mp4",
+      "format": "mp4"
+    },
+    "synopsis": "Un policía investiga una serie de muertes violentas en un pueblo rural coreano, relacionadas con un misterioso extranjero.",
+    "tags": [
+      "misterio",
+      "posesiones",
+      "chamanismo"
+    ],
+    "gore": 4,
+    "scares": 5,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 27,
+    "title": "Train to Busan",
+    "year": 2016,
+    "country": "Corea",
+    "poster": "images/train_to_busan.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_TRAIN_BUSAN",
+    "synopsis": "Pasajeros en un tren de alta velocidad deben luchar por sus vidas durante un apocalipsis zombi.",
+    "tags": [
+      "zombis",
+      "supervivencia",
+      "apocalíptico"
+    ],
+    "gore": 4.7,
+    "scares": 4.7,
+    "subgenre": "Zombis",
+    "comments": [],
+    "jumpscares": 4.7,
+    "suspense": 4.7,
+    "gore_count": 3,
+    "scares_count": 3,
+    "jumps_count": 3,
+    "suspense_count": 3
+  },
+  {
+    "id": 28,
+    "title": "Thirst",
+    "year": 2009,
+    "country": "Corea",
+    "poster": "images/thirst.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_THIRST",
+    "synopsis": "Un sacerdote se convierte en vampiro después de un experimento médico, luchando entre su fe y sus nuevos impulsos.",
+    "tags": [
+      "vampiros",
+      "religión",
+      "erótico"
+    ],
+    "gore": 3.2,
+    "scares": 3.2,
+    "subgenre": "Vampiros",
+    "comments": [],
+    "jumpscares": 3.2,
+    "suspense": 3.2,
+    "gore_count": 18,
+    "scares_count": 18,
+    "jumps_count": 18,
+    "suspense_count": 18
+  },
+  {
+    "id": 29,
+    "title": "The Host",
+    "year": 2006,
+    "country": "Corea",
+    "poster": "images/the_host.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_HOST",
+    "synopsis": "Un monstruo mutante emerge del río Han y secuestra a una joven, llevando a su familia a una desesperada búsqueda.",
+    "tags": [
+      "monstruos",
+      "familia",
+      "acción"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Monstruos",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 30,
+    "title": "Gonjiam: Haunted Asylum",
+    "year": 2018,
+    "country": "Corea",
+    "poster": "images/gonjiam.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_GONJIAM",
+    "synopsis": "Un equipo de transmisión en vivo investiga un manicomio abandonado conocido como lugar embrujado.",
+    "tags": [
+      "found footage",
+      "hospital",
+      "fantasmas"
+    ],
+    "gore": 3,
+    "scares": 5,
+    "subgenre": "Found Footage",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 31,
+    "title": "Exhuma",
+    "year": 2024,
+    "country": "Corea",
+    "poster": "images/exhuma.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_EXHUMA",
+    "synopsis": "Un chamán y médicos forenses exhuman un cadáver misterioso, liberando una maldición ancestral.",
+    "tags": [
+      "maldiciones",
+      "chamanismo",
+      "sobrenatural"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 32,
+    "title": "The Whispering Corridors",
+    "year": 1998,
+    "country": "Corea",
+    "poster": "images/whispering_corridors.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_WHISPERING",
+    "synopsis": "En una escuela femenina coreana, el fantasma de una estudiante fallecida regresa para vengarse.",
+    "tags": [
+      "escuela",
+      "fantasmas",
+      "venganza"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 33,
+    "title": "Martyrs",
+    "year": 2008,
+    "country": "Francia",
+    "poster": "images/martyrs.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_MARTYRS",
+    "synopsis": "Una mujer busca venganza por su tortura infantil, descubriendo una organización secreta que experimenta con el sufrimiento.",
+    "tags": [
+      "tortura",
+      "filosófico",
+      "extremo"
+    ],
+    "gore": 5,
+    "scares": 5,
+    "subgenre": "Tortura",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 34,
+    "title": "High Tension",
+    "year": 2003,
+    "country": "Francia",
+    "poster": "images/high_tension.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_HIGH_TENSION",
+    "synopsis": "Dos amigas universitarias son acosadas por un asesino psicópata durante sus vacaciones en una casa rural.",
+    "tags": [
+      "slasher",
+      "psicópata",
+      "suspenso"
+    ],
+    "gore": 5,
+    "scares": 4,
+    "subgenre": "Slasher",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 35,
+    "title": "Inside (À l'intérieur)",
+    "year": 2007,
+    "country": "Francia",
+    "poster": "images/inside.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_INSIDE",
+    "synopsis": "Una mujer embarazada es acosada en su casa por una misteriosa mujer que quiere su bebé nonato.",
+    "tags": [
+      "home invasion",
+      "embarazo",
+      "extremo"
+    ],
+    "gore": 5,
+    "scares": 5,
+    "subgenre": "Home Invasion",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 36,
+    "title": "Raw (Grave)",
+    "year": 2016,
+    "country": "Francia",
+    "poster": "images/raw.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_RAW",
+    "synopsis": "Una estudiante de veterinaria vegetariana desarrolla un craving por la carne cruda después de un ritual universitario.",
+    "tags": [
+      "canibalismo",
+      "coming-of-age",
+      "body horror"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Body Horror",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 37,
+    "title": "Sheitan",
+    "year": 2006,
+    "country": "Francia",
+    "poster": "images/sheitan.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_SHEITAN",
+    "synopsis": "Un grupo de jóvenes pasa el fin de semana en una granja rural donde son acosados por un extraño guardián.",
+    "tags": [
+      "rural",
+      "satánico",
+      "suspenso"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Satanico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 38,
+    "title": "Calvaire",
+    "year": 2004,
+    "country": "Francia/Bélgica",
+    "poster": "images/calvaire.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_CALVAIRE",
+    "synopsis": "Un cantante varado en un pueblo remoto es capturado por un posadero que lo confunde con su esposa desaparecida.",
+    "tags": [
+      "rural",
+      "psicológico",
+      "surrealista"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 39,
+    "title": "Livide (Livid)",
+    "year": 2011,
+    "country": "Francia",
+    "poster": "images/livide.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_LIVIDE",
+    "synopsis": "Una aprendiz de enfermera y sus amigos deciden robar una mansión abandonada, descubriendo secretos sobrenaturales.",
+    "tags": [
+      "vampiros",
+      "mansión",
+      "sobrenatural"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Vampiros",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 40,
+    "title": "A Tale of Two Sisters",
+    "year": 2003,
+    "country": "Corea",
+    "poster": "images/tale_two_sisters.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_TALE_SISTERS",
+    "synopsis": "Dos hermanas regresan a casa después de un tiempo en un hospital psiquiátrico y enfrentan los fantasmas de su pasado familiar y una madrastra siniestra.",
+    "tags": [
+      "psicológico",
+      "fantasmas",
+      "familia",
+      "suspenso"
+    ],
+    "gore": 2,
+    "scares": 5,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 41,
+    "title": "Frontier(s)",
+    "year": 2007,
+    "country": "Francia",
+    "poster": "images/frontiers.jpg",
+    "trailer": "https://www.youtube.com/embed/CODIGO_FRONTIERS",
+    "synopsis": "Durante disturbios civiles en Francia, un grupo de jóvenes criminales busca refugio en un hostal rural dirigido por una familia de neo-nazis caníbales.",
+    "tags": [
+      "canibalismo",
+      "extremo",
+      "supervivencia",
+      "político"
+    ],
+    "gore": 5,
+    "scares": 4,
+    "subgenre": "Extremo",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 42,
+    "title": "Pulse (Kairo)",
+    "year": 2001,
+    "country": "Japón",
+    "poster": "images/pulse.jpg",
+    "video": "videos/pulse.mp4",
+    "synopsis": "Un grupo de jóvenes descubre un sitio web misterioso que predice sus muertes mientras fantasmas invaden el mundo real.",
+    "tags": [
+      "tecnología",
+      "fantasmas",
+      "apocalíptico"
+    ],
+    "gore": 2,
+    "scares": 5,
+    "subgenre": "Tecnológico",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 43,
+    "title": "Cure",
+    "year": 1997,
+    "country": "Japón",
+    "poster": "images/cure.jpg",
+    "video": "videos/cure.mp4",
+    "synopsis": "Un detective investiga una serie de asesinatos idénticos cometidos por personas diferentes sin motivo aparente.",
+    "tags": [
+      "psicológico",
+      "policial",
+      "hipnosis"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 44,
+    "title": "Tomie",
+    "year": 1999,
+    "country": "Japón",
+    "poster": "images/tomie.jpg",
+    "video": "videos/tomie.mp4",
+    "synopsis": "Una bella e inmortal mujer regresa de la muerte para obsesionar y enloquecer a quienes la rodean.",
+    "tags": [
+      "sobrenatural",
+      "venganza",
+      "inmortalidad"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 45,
+    "title": "Noroi: The Curse",
+    "year": 2005,
+    "country": "Japón",
+    "poster": "images/noroi.jpg",
+    "video": "videos/noroi.mp4",
+    "synopsis": "Documentalista investiga fenómenos paranormales relacionados con una antigua entidad demoníaca.",
+    "tags": [
+      "falso documental",
+      "maldiciones",
+      "demonios"
+    ],
+    "gore": 3,
+    "scares": 5,
+    "subgenre": "Found Footage",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 46,
+    "title": "House (Hausu)",
+    "year": 1977,
+    "country": "Japón",
+    "poster": "images/hausu.jpg",
+    "video": "videos/hausu.mp4",
+    "synopsis": "Un grupo de escolares visita una casa embrujada que cobra vida con efectos visuales surrealistas y aterradores.",
+    "tags": [
+      "surrealista",
+      "fantasmas",
+      "experimental"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Surrealista",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 47,
+    "title": "Tetsuo: The Iron Man",
+    "year": 1989,
+    "country": "Japón",
+    "poster": "images/tetsuo.jpg",
+    "video": "videos/tetsuo.mp4",
+    "synopsis": "Un hombre comienza a transformarse en metal en esta película de culto cyberpunk y body horror.",
+    "tags": [
+      "body horror",
+      "cyberpunk",
+      "experimental"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Body Horror",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 48,
+    "title": "Kuroneko",
+    "year": 1968,
+    "country": "Japón",
+    "poster": "images/kuroneko.jpg",
+    "video": "videos/kuroneko.mp4",
+    "synopsis": "Dos mujeres violadas y asesinadas por samuráis regresan como fantasmas vengativos en forma de gatos.",
+    "tags": [
+      "fantasmas",
+      "venganza",
+      "samuráis"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Folclórico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 49,
+    "title": "Seance",
+    "year": 2000,
+    "country": "Japón",
+    "poster": "images/seance.jpg",
+    "video": "videos/seance.mp4",
+    "synopsis": "Un médium y su esposo se ven envueltos en la desaparición de una niña y fenómenos sobrenaturales.",
+    "tags": [
+      "mediums",
+      "secuestro",
+      "sobrenatural"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 50,
+    "title": "Infection (Kansen)",
+    "year": 2004,
+    "country": "Japón",
+    "poster": "images/infection.jpg",
+    "video": "videos/infection.mp4",
+    "synopsis": "En un hospital, un error médico desencadena una infección sobrenatural que afecta a pacientes y staff.",
+    "tags": [
+      "hospital",
+      "virus",
+      "sobrenatural"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Virus",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 51,
+    "title": "Ju-On 2",
+    "year": 2003,
+    "country": "Japón",
+    "poster": "images/grude2.jpg",
+    "video": "videos/juon2.mp4",
+    "synopsis": "La maldición de la casa Saeki se expande afectando a nuevos personajes en esta secuela directa.",
+    "tags": [
+      "maldiciones",
+      "fantasmas",
+      "secuela"
+    ],
+    "gore": 3,
+    "scares": 5,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 52,
+    "title": "Exte: Hair Extensions",
+    "year": 2007,
+    "country": "Japón",
+    "poster": "images/exte.jpg",
+    "video": "videos/exte.mp4",
+    "synopsis": "Extensiones de cabello poseídas por el espíritu vengativo de una mujer muerta cobran vida propia.",
+    "tags": [
+      "body horror",
+      "venganza",
+      "cabello"
+    ],
+    "gore": 4,
+    "scares": 3,
+    "subgenre": "Body Horror",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 53,
+    "title": "Gozu",
+    "year": 2003,
+    "country": "Japón",
+    "poster": "images/gozu.jpg",
+    "video": "videos/gozu.mp4",
+    "synopsis": "Un yakuza debe deshacerse de su hermano loco, pero el viaje se convierte en una pesadilla surrealista.",
+    "tags": [
+      "surrealista",
+      "yakuza",
+      "bizarro"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Surrealista",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 54,
+    "title": "Retribution",
+    "year": 2006,
+    "country": "Japón",
+    "poster": "images/retribution.jpg",
+    "video": "videos/retribution.mp4",
+    "synopsis": "Un detective investiga asesinatos mientras es acosado por el fantasma de una mujer de rojo.",
+    "tags": [
+      "fantasmas",
+      "policial",
+      "venganza"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 55,
+    "title": "Sadako vs. Kayako",
+    "year": 2016,
+    "country": "Japón",
+    "poster": "images/svsk.png",
+    "video": "videos/sadako_vs_kayako.mp4",
+    "synopsis": "Crossover épico donde las dos maldiciones más famosas del cine japonés se enfrentan entre sí.",
+    "tags": [
+      "crossover",
+      "maldiciones",
+      "fantasmas"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Crossover",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 56,
+    "title": "El Exorcista",
+    "year": 1973,
+    "country": "EE.UU.",
+    "poster": "images/elExorcista.png",
+    "video": "videos/exorcista.mp4",
+    "synopsis": "Una joven comienza a mostrar cambios inquietantes: voces desconocidas, comportamientos violentos y sucesos inexplicables dentro de la casa. Desesperada por salvar a su hija, su madre acude a dos sacerdotes que deberán enfrentarse a una presencia demoníaca de enorme poder. El exorcismo se convierte en una batalla espiritual que pondrá en riesgo sus vidas y su fe.",
+    "tags": [
+      "posesiones",
+      "clásico"
+    ],
+    "gore": 3,
+    "scares": 5,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 5,
+    "suspense": 5
+  },
+  {
+    "id": 57,
+    "title": "Hereditary",
+    "year": 2018,
+    "country": "EE.UU.",
+    "poster": "images/hereditary.png",
+    "video": "videos/hereditary.mp4",
+    "synopsis": "Tras la muerte de la enigmática matriarca, la familia Graham empieza a experimentar una serie de eventos perturbadores que revelan secretos oscuros heredados por generaciones. Mientras las tensiones crecen y la realidad parece desmoronarse, cada miembro se enfrenta a fuerzas que los superan. La tragedia familiar se transforma en un destino aterrador imposible de detener.",
+    "tags": [
+      "familia",
+      "cultos",
+      "trauma"
+    ],
+    "gore": 3,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 58,
+    "title": "The Babadook",
+    "year": 2014,
+    "country": "Australia",
+    "poster": "images/babadook.png",
+    "video": "videos/babadook.mp4",
+    "synopsis": "Amelia, una madre agotada por la crianza en solitario, lucha con el comportamiento cada vez más extraño de su hijo, quien afirma que una criatura del libro “Mister Babadook” los acecha. Lo que comienza como un cuento infantil se convierte en una presencia real y opresiva que invade la casa y la mente de ambos, revelando un monstruo nacido del duelo no resuelto.",
+    "tags": [
+      "monstruos",
+      "duelo"
+    ],
+    "gore": 1,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 59,
+    "title": "The Shining",
+    "year": 1980,
+    "country": "EE.UU.",
+    "poster": "images/theShining.png",
+    "video": "videos/shining.mp4",
+    "synopsis": "Jack Torrance acepta el trabajo como cuidador invernal del aislado Hotel Overlook, esperando encontrar inspiración para escribir. Sin embargo, el encierro, los pasillos vacíos y las fuerzas malignas del lugar comienzan a afectarlo. Su hijo Danny, dotado de un don psíquico, percibe visiones aterradoras mientras la cordura de su padre se derrumba y el hotel exige un nuevo sacrificio.",
+    "tags": [
+      "aislamiento",
+      "hotel",
+      "clásico"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 60,
+    "title": "Insidious",
+    "year": 2010,
+    "country": "EE.UU.",
+    "poster": "images/insidious.png",
+    "video": "videos/insidious.mp4",
+    "synopsis": "Cuando el pequeño Dalton entra en un coma inexplicable, su familia descubre que no se trata de un problema médico: su espíritu ha quedado atrapado en un reino oscuro llamado “El Más Allá”. Con la ayuda de una médium, deberán enfrentarse a entidades que desean poseer su cuerpo mientras una fuerza demoníaca se acerca cada vez más a la realidad.",
+    "tags": [
+      "viajes astrales",
+      "espíritus"
+    ],
+    "gore": 1,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 61,
+    "title": "A Nightmare on Elm Street",
+    "year": 1984,
+    "country": "EE.UU.",
+    "poster": "images/nightmare.png",
+    "video": "videos/elmstreet.mp4",
+    "synopsis": "Los adolescentes de Elm Street comparten una pesadilla: un hombre desfigurado con guante de cuchillas que los persigue mientras duermen. Cuando uno de ellos muere en circunstancias imposibles, se dan cuenta de que el asesino puede matarlos desde sus sueños. Sin descanso y al borde del colapso, deberán enfrentarse a Freddy Krueger antes de que el sueño los atrape para siempre.",
+    "tags": [
+      "slasher",
+      "sueños"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Slasher",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 62,
+    "title": "Halloween",
+    "year": 1978,
+    "country": "EE.UU.",
+    "poster": "images/halloween.png",
+    "video": "videos/halloween.mp4",
+    "synopsis": "Quince años después de asesinar a su hermana, Michael Myers escapa de un hospital psiquiátrico y regresa a su pueblo natal. En la noche de Halloween, su objetivo se centra en una joven niñera y sus amigos. Silencioso, imparable y oculto tras su máscara blanca, Myers deja un rastro de muerte mientras el Dr. Loomis intenta detenerlo antes de que la noche acabe.",
+    "tags": [
+      "slasher",
+      "asesino enmascarado"
+    ],
+    "gore": 3,
+    "scares": 3,
+    "subgenre": "Slasher",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 63,
+    "title": "The Texas Chain Saw Massacre",
+    "year": 1974,
+    "country": "EE.UU.",
+    "poster": "images/texas.png",
+    "video": "videos/texaschainsaw.mp4",
+    "synopsis": "Un grupo de jóvenes se aventura por una zona rural de Texas sin imaginar que serán perseguidos por una familia de caníbales. Entre ellos destaca Leatherface, un brutal asesino que usa una máscara hecha de piel humana. Atrapados en una pesadilla real, los jóvenes deberán escapar antes de convertirse en parte del macabro festín familiar.",
+    "tags": [
+      "caníbales",
+      "familia perturbada"
+    ],
+    "gore": 5,
+    "scares": 4,
+    "subgenre": "Gore",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 64,
+    "title": "Get Out",
+    "year": 2017,
+    "country": "EE.UU.",
+    "poster": "images/getOut.png",
+    "video": "videos/getout.mp4",
+    "synopsis": "Chris acompaña a su novia a conocer a sus aparentemente encantadores padres. Sin embargo, pequeños detalles y un comportamiento inquietante de los empleados del hogar revelan que algo siniestro ocurre en esa comunidad. A medida que descubre la verdad, Chris queda atrapado en un plan perverso que mezcla racismo, manipulación psicológica y ciencia retorcida.",
+    "tags": [
+      "racismo",
+      "thriller",
+      "sátira"
+    ],
+    "gore": 2,
+    "scares": 3,
+    "subgenre": "Psicológico",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 65,
+    "title": "The Witch",
+    "year": 2015,
+    "country": "EE.UU.",
+    "poster": "images/theWitch.png",
+    "video": "videos/thewitch.mp4",
+    "synopsis": "En la Nueva Inglaterra de 1630, una familia puritana es expulsada de su comunidad y se instala junto a un bosque que esconde un mal ancestral. Cuando su bebé desaparece y extraños sucesos se multiplican, los lazos familiares comienzan a romperse bajo el peso del miedo, la paranoia y las supersticiones. Una presencia oscura acecha desde entre los árboles.",
+    "tags": [
+      "brujería",
+      "folclore"
+    ],
+    "gore": 2,
+    "scares": 3,
+    "subgenre": "Folclórico",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 66,
+    "title": "The Blair Witch Project",
+    "year": 1999,
+    "country": "EE.UU.",
+    "poster": "images/blairwitch.png",
+    "video": "videos/blairwitch.mp4",
+    "synopsis": "Tres estudiantes se adentran en los bosques de Maryland para grabar un documental sobre la leyenda de la Bruja de Blair. Lo que parece una simple investigación se convierte en una pesadilla cuando comienzan a perderse y a experimentar hechos inexplicables durante la noche. Sus grabaciones, recuperadas tiempo después, revelan los últimos momentos de terror que vivieron.",
+    "tags": [
+      "found footage",
+      "bosque"
+    ],
+    "gore": 1,
+    "scares": 4,
+    "subgenre": "Found Footage",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 67,
+    "title": "The Others",
+    "year": 2001,
+    "country": "España / EE.UU.",
+    "poster": "images/theothers.png",
+    "video": "videos/theothers.mp4",
+    "synopsis": "Grace vive con sus dos hijos fotosensibles en una mansión aislada y sombría. La llegada de nuevos sirvientes coincide con la aparición de extraños ruidos y presencias. Mientras protege a sus hijos de la luz y de lo que parece acecharlos, Grace descubre que la verdad detrás de la casa es mucho más perturbadora de lo que imaginaba.",
+    "tags": [
+      "fantasmas",
+      "casa embrujada"
+    ],
+    "gore": 1,
+    "scares": 3,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 68,
+    "title": "[REC]",
+    "year": 2007,
+    "country": "España",
+    "poster": "images/rec.png",
+    "video": "videos/rec.mp4",
+    "synopsis": "Una reportera y su camarógrafo acompañan a un equipo de bomberos a un edificio donde se ha reportado un incidente. Lo que parecía una rutina se transforma en una pesadilla cuando el lugar queda en cuarentena y los residentes comienzan a comportarse de forma violenta. Sin salida y con la cámara como única testigo, deberán sobrevivir al horror que se desata dentro.",
+    "tags": [
+      "infectados",
+      "found footage"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Infectados",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 69,
+    "title": "Verónica",
+    "year": 2017,
+    "country": "España",
+    "poster": "images/veronica.png",
+    "video": "videos/veronica.mp4",
+    "synopsis": "Durante un eclipse solar, Verónica y sus amigas juegan a la ouija intentando contactar al padre fallecido de la joven. Lo que inicia como un juego desencadena la presencia de algo maligno que la sigue tanto de día como de noche. Mientras su comportamiento se vuelve más errático, su familia queda atrapada en una espiral de terror creciente.",
+    "tags": [
+      "ouija",
+      "posesiones"
+    ],
+    "gore": 2,
+    "scares": 4,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 70,
+    "title": "El Orfanato",
+    "year": 2007,
+    "country": "España",
+    "poster": "images/elorfanato.png",
+    "video": "videos/orfanato.mp4",
+    "synopsis": "Laura regresa al orfanato donde creció para convertirlo en un hogar para niños discapacitados. Poco después, su hijo Simón comienza a hablar con un amigo invisible que sabe demasiado. Cuando el niño desaparece, Laura inicia una desesperada búsqueda que la lleva a descubrir los trágicos secretos del lugar. La línea entre lo real y lo sobrenatural se vuelve borrosa.",
+    "tags": [
+      "fantasmas",
+      "niños"
+    ],
+    "gore": 1,
+    "scares": 3,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 71,
+    "title": "Kilómetro 31",
+    "year": 2006,
+    "country": "México",
+    "poster": "images/km31.png",
+    "video": "videos/km31.mp4",
+    "synopsis": "Tras un accidente en una carretera rodeada de leyendas, Agata queda en coma y su hermana gemela, Catalina, comienza a experimentar visiones inquietantes conectadas con la zona. Decidida a descubrir la verdad, se enfrenta a apariciones que parecen surgir del mismo asfalto y a un espíritu atrapado entre el mundo de los vivos y los muertos.",
+    "tags": [
+      "leyendas urbanas",
+      "carretera"
+    ],
+    "gore": 3,
+    "scares": 3,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 72,
+    "title": "La Llorona",
+    "year": 2019,
+    "country": "Guatemala",
+    "poster": "images/llorona.png",
+    "video": "videos/lallorona.mp4",
+    "synopsis": "Un general retirado, acusado de genocidio, vive encerrado en su mansión mientras protestas exigen justicia. Sin embargo, desde que inicia el juicio, una misteriosa mujer comienza a aparecer en el hogar, trayendo consigo llantos, agua y recuerdos del pasado. La familia deberá enfrentarse tanto a sus crímenes como a la encarnación sobrenatural de la venganza.",
+    "tags": [
+      "leyenda",
+      "justicia"
+    ],
+    "gore": 1,
+    "scares": 3,
+    "subgenre": "Folclórico",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 73,
+    "title": "The Descent",
+    "year": 2005,
+    "country": "Reino Unido",
+    "poster": "images/descent.png",
+    "video": "videos/thedescent.mp4",
+    "synopsis": "Un grupo de amigas se reúne para una expedición espeleológica en una cueva desconocida. Lo que promete ser una aventura emocionante se vuelve mortal cuando quedan atrapadas y descubren que no están solas: criaturas depredadoras, adaptadas a la oscuridad absoluta, acechan desde las profundidades. La supervivencia dependerá de sus instintos y de su confianza mutua.",
+    "tags": [
+      "criaturas",
+      "claustrofobia"
+    ],
+    "gore": 4,
+    "scares": 4,
+    "subgenre": "Monstruos",
+    "comments": [],
+    "jumpscares": 4,
+    "suspense": 4
+  },
+  {
+    "id": 74,
+    "title": "It Follows",
+    "year": 2014,
+    "country": "EE.UU.",
+    "poster": "images/itfollows.png",
+    "video": "videos/itfollows.mp4",
+    "synopsis": "Tras un encuentro íntimo, Jay se convierte en el objetivo de una entidad sobrenatural que puede tomar la forma de cualquier persona y la seguirá caminando, lenta pero implacablemente. Para sobrevivir deberá mantenerse en movimiento y descifrar la cadena maldita antes de que la figura que la sigue finalmente la alcance.",
+    "tags": [
+      "maldiciones",
+      "entidad"
+    ],
+    "gore": 2,
+    "scares": 3,
+    "subgenre": "Sobrenatural",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  },
+  {
+    "id": 75,
+    "title": "Don't Breathe",
+    "year": 2016,
+    "country": "EE.UU.",
+    "poster": "images/dontbreathe.png",
+    "video": "videos/dontbreathe.mp4",
+    "synopsis": "Un grupo de jóvenes planea robar la casa de un veterano de guerra ciego, creyendo que será un blanco fácil. Pero una vez dentro descubren que el hombre es extremadamente peligroso, violento y conoce cada rincón de su hogar. La situación se convierte en un juego mortal de persecución donde el silencio es la única oportunidad para escapar.",
+    "tags": [
+      "home invasion",
+      "suspenso"
+    ],
+    "gore": 3,
+    "scares": 3,
+    "subgenre": "Thriller de terror",
+    "comments": [],
+    "jumpscares": 3,
+    "suspense": 3
+  }
+]
