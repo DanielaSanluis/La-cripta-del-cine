@@ -11,7 +11,7 @@
       "posesiones",
       "basada en hechos reales"
     ],
-    "gore": 4,
+    "gore": 4.4,
     "scares": 4.3,
     "subgenre": "Sobrenatural",
     "comments": [
@@ -24,14 +24,54 @@
         "user": "luyi",
         "text": "excelente pelicula, me encanto",
         "date": "2025-11-11T02:46:47.368Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:13:14.694Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:22:53.006Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:24:32.073Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:28:57.626Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:31:05.389Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:33:50.042Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:45:30.780Z"
+      },
+      {
+        "user": "Daniela",
+        "text": "Prueba de comentario desde test",
+        "date": "2025-12-02T07:46:27.470Z"
       }
     ],
-    "jumpscares": 4.3,
-    "suspense": 4.1,
-    "gore_count": 7,
-    "scares_count": 7,
-    "jumps_count": 7,
-    "suspense_count": 7
+    "jumpscares": 3.8,
+    "suspense": 3.3,
+    "gore_count": 11,
+    "scares_count": 11,
+    "jumps_count": 11,
+    "suspense_count": 11
   },
   {
     "id": 2,

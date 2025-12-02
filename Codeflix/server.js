@@ -251,8 +251,18 @@ app.get("/api/contact-list", (req, res) => { // Endpoint para listar mensajes de
 });
 
 // Iniciar servidor
-app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`)); // Inicia el servidor en el puerto definido
+//app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`)); // Inicia el servidor en el puerto definido
 
 // Servir archivos estáticos adicionales (imágenes, videos)
 app.use("/images", express.static(path.join(__dirname, "public", "images"))); // Sirve imágenes en /images
 app.use("/videos", express.static(path.join(__dirname, "public", "videos"))); // Sirve videos en /videos
+
+//IMPORTANTE: solo levantar el servidor si NO estamos en modo test
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () =>
+    console.log(`Servidor corriendo en http://localhost:${PORT}`)
+  );
+}
+
+//Exportar la app para poder importarla en las pruebas
+export default app;
