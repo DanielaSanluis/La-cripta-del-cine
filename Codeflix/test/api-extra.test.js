@@ -17,7 +17,7 @@ test("POST /api/movies/:id/comment rechaza comentario incompleto", async () => {
   // Enviamos un comentario sin el campo "text"
   const res = await request(app)
     .post(`/api/movies/${movie.id}/comment`)
-    .send({ user: "Daniela" }) // ❌ falta text
+    .send({ user: "Daniela" }) // falta text
     .expect(400);
 
   // Validamos el mensaje de error
@@ -50,7 +50,7 @@ test("POST /api/movies/:id/rate rechaza valores > 5", async () => {
 
   const res = await request(app)
     .post(`/api/movies/${movie.id}/rate`)
-    .send({ gore: 10, scares: 3, jumpscares: 2, suspense: 4 }) // ❌ gore fuera de rango
+    .send({ gore: 10, scares: 3, jumpscares: 2, suspense: 4 }) // gore fuera de rango
     .expect(400);
 
   assert.match(res.body.error, /Campo inválido/i);
