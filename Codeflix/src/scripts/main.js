@@ -270,12 +270,13 @@ function applyFilters(e) {
     const allMoviesGrid = document.getElementById('all-movies');
     const allMoviesTitle = allMoviesGrid?.previousElementSibling?.tagName === 'H2' ? allMoviesGrid.previousElementSibling : null;
 
+    // Quitar mensaje previo de "no-results" si existe (evita que se borre el recién creado)
+    const prevNoResults = document.getElementById('no-results-message');
+    if (prevNoResults) prevNoResults.remove();
+
     // --- SIN RESULTADOS ---
     // --- SIN RESULTADOS ---
 if (filtered.length === 0) {
-  if (allMoviesGrid) allMoviesGrid.style.display = 'none';
-  if (allMoviesTitle) allMoviesTitle.style.display = 'none';
-
   const main = document.querySelector('main');
 
   // Contenedor principal de sugerencias
@@ -287,11 +288,25 @@ if (filtered.length === 0) {
     suggestionWrapper.style.flexDirection = 'column';
     suggestionWrapper.style.alignItems = 'center';
     suggestionWrapper.style.margin = '2rem auto';
-    main.insertBefore(suggestionWrapper, allMoviesGrid);
+    // Insertar la sugerencia en el lugar donde estaba la sección de todas las películas
+    if (allMoviesGrid && allMoviesGrid.parentElement) {
+      allMoviesGrid.parentElement.insertBefore(suggestionWrapper, allMoviesGrid);
+    } else if (main) {
+      main.appendChild(suggestionWrapper);
+    }
   } else {
     suggestionWrapper.innerHTML = '';
     suggestionWrapper.style.display = 'flex';
   }
+
+  // Ahora que la sugerencia está en el DOM, eliminar la sección de "Todas las películas"
+  if (allMoviesGrid) {
+    // Guardar HTML original para poder restaurarlo luego
+    if (!window._allMoviesSectionHtml) window._allMoviesSectionHtml = allMoviesGrid.outerHTML;
+    allMoviesGrid.remove();
+  }
+  // Quitar también el título asociado si existiera como elemento separado
+  if (allMoviesTitle) allMoviesTitle.remove();
 
   // --- Mensaje ---
   const msg = document.createElement('div');
@@ -300,25 +315,33 @@ if (filtered.length === 0) {
   msg.style.fontSize = '1.5rem';
   msg.style.margin = '0 0 1.5rem 0';
   msg.style.textAlign = 'center';
-  msg.innerHTML = `No encontramos nada 😢, pero mira algo de <strong>Terror Coreano</strong> mientras tanto:`;
+  msg.innerHTML = `No encontré resultados. ¿Qué tal ver <strong>Terror Coreano</strong> mientras tanto?`;
   suggestionWrapper.appendChild(msg);
 
   // --- Contenedor independiente para el carrusel ---
   const carouselWrapper = document.createElement('div');
-  carouselWrapper.id = 'carousel-koreanHorror-wrapper';
+  carouselWrapper.id = 'carousel-koreanHorror-wrapper-suggested';
   carouselWrapper.className = 'carousel-wrapper';
   suggestionWrapper.appendChild(carouselWrapper);
 
-  // Crear un div “limpio” para renderCarousel
+  // Crear un div con id único para evitar duplicados con el carrusel original
+  const suggestedId = 'carousel-koreanHorror-suggested';
   const carouselContainer = document.createElement('div');
-  carouselContainer.id = 'carousel-koreanHorror';
+  carouselContainer.id = suggestedId;
   carouselWrapper.appendChild(carouselContainer);
 
-  // Renderizar carrusel dentro de este contenedor limpio
+  // Ocultar todos los carruseles originales para que sólo se vea la sugerencia
+  document.querySelectorAll('.carousel-wrapper').forEach(el => {
+    if (!el.closest('#suggested-carousel-wrapper')) el.style.display = 'none';
+    const prev = el.previousElementSibling;
+    if (prev && prev.tagName === 'H2') prev.style.display = 'none';
+  });
+
+  // Renderizar carrusel dentro de este contenedor limpio (id único)
   renderCarousel(
     'Terror Coreano',
     (window.G_carousels?.koreanHorror) || [],
-    'carousel-koreanHorror'
+    suggestedId
   );
 
   // Activar flechas
@@ -327,9 +350,7 @@ if (filtered.length === 0) {
 
 
 
-    // quitar mensaje si existe
-    const msg = document.getElementById('no-results-message');
-    if (msg) msg.remove();
+    // (Se eliminó la eliminación inmediata del mensaje para evitar borrar la sugerencia recién creada)
 
     // --- HAY RESULTADOS ---
     if (filtersActive) {
@@ -339,7 +360,7 @@ if (filtered.length === 0) {
       if (allMoviesGrid) allMoviesGrid.style.display = '';
       if (allMoviesTitle) {
         allMoviesTitle.style.display = '';
-        allMoviesTitle.textContent = `Resultados (${filtered.length})`;
+        allMoviesTitle.textContent = `Aquí tienes los resultados (${filtered.length})`;
       }
 
       // ocultar carruseles originales (excepto sugerido)
@@ -356,18 +377,52 @@ if (filtered.length === 0) {
       document.getElementById('search-results-section')?.remove();
 
     } else {
-      // Restaurar grid principal y títulos
-      if (allMoviesGrid) allMoviesGrid.style.display = '';
-      if (allMoviesTitle) {
-        allMoviesTitle.style.display = '';
-        // Restaurar texto original
-        allMoviesTitle.textContent = 'Todas las películas';
+      // Restaurar grid principal y títulos: si la sección fue eliminada, reinsertarla
+      if (!document.getElementById('all-movies')) {
+        const mainEl = document.querySelector('main');
+        const aboutEl = document.getElementById('about-section');
+        if (window._allMoviesSectionHtml) {
+          if (aboutEl) {
+            aboutEl.insertAdjacentHTML('beforebegin', window._allMoviesSectionHtml);
+          } else if (mainEl) {
+            mainEl.insertAdjacentHTML('beforeend', window._allMoviesSectionHtml);
+          }
+        } else {
+          // Fallback: crear una estructura mínima
+          const sec = document.createElement('section');
+          sec.id = 'all-movies';
+          sec.innerHTML = '<h2>Todas las películas</h2><div id="movies-grid" class="movies-grid"></div><div id="movies-pagination" class="pagination"></div>';
+          if (aboutEl && aboutEl.parentElement) aboutEl.parentElement.insertBefore(sec, aboutEl);
+          else if (mainEl) mainEl.appendChild(sec);
+        }
+      }
+
+      // Asegurar que el título interno diga lo esperado
+      const restoredSection = document.getElementById('all-movies');
+      if (restoredSection) {
+        const h2 = restoredSection.querySelector('h2');
+        if (h2) h2.textContent = 'Todas las películas';
       }
 
       if (countEl) countEl.innerText = String(allMovies.length);
       renderAllMovies._overrideList = null;
-      const old = document.getElementById('search-results-section'); 
+      const old = document.getElementById('search-results-section');
       if (old) old.remove();
+
+      // Quitar cualquier sugerencia mostrada anteriormente
+      const suggestedWrap = document.getElementById('suggested-carousel-wrapper');
+      if (suggestedWrap) suggestedWrap.remove();
+      const suggestedCarouselWrapper = document.getElementById('carousel-koreanHorror-wrapper-suggested');
+      if (suggestedCarouselWrapper) suggestedCarouselWrapper.remove();
+      const suggestedCarousel = document.getElementById('carousel-koreanHorror-suggested');
+      if (suggestedCarousel) suggestedCarousel.remove();
+
+      // Restaurar visibilidad de los carruseles originales y sus títulos
+      document.querySelectorAll('.carousel-wrapper').forEach(el => {
+        el.style.display = 'flex';
+        const prev = el.previousElementSibling;
+        if (prev && prev.tagName === 'H2') prev.style.display = '';
+      });
 
       // re-renderizar carruseles originales
       Object.entries(window.G_carousels || {}).forEach(([key, ids]) => {
@@ -469,7 +524,22 @@ async function init() {
 
   // Inicializar filtros y listeners
   renderTagsFilter();
-  document.getElementById("search")?.addEventListener("input", applyFilters);
+  // Búsqueda dinámica: actualizar resultados conforme se escribe.
+  const searchEl = document.getElementById("search");
+  if (searchEl) {
+    // Debounce para evitar ejecución excesiva mientras el usuario escribe
+    let _debounceTimer = null;
+    const debouncedApply = () => {
+      if (_debounceTimer) clearTimeout(_debounceTimer);
+      _debounceTimer = setTimeout(() => {
+        applyFilters();
+      }, 150);
+    };
+
+    searchEl.addEventListener('input', debouncedApply);
+    // Algunos navegadores/firefox emiten 'search' on clear (x) — actualizar también
+    searchEl.addEventListener('search', applyFilters);
+  }
   ['filter-gore','filter-miedo','filter-jumps','filter-suspense'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', applyFilters);
   });

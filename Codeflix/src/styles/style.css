@@ -113,6 +113,15 @@ header h1 {
   letter-spacing: 1px;
 }
 
+/* Tamaño del logo por página: más grande en la página principal, más pequeño en la página de detalle */
+body.home header h1 {
+  font-size: 4.2rem; /* agrandar en la página principal */
+}
+
+body:not(.home) header h1 {
+  font-size: 2rem; /* reducir en páginas de detalle u otras */
+}
+
 /* Links o botones del header */
 header nav a {
   color: #E6E6FA;
