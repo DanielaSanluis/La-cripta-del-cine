@@ -151,7 +151,7 @@
     "trailer":{
 	  "type": "youtube",
 	  "id": "MpsXvHMUQ3Q&rco=1",
-	  "url": "https://www.youtube.com/embed/MpsXvHMUQ3Q&rco=1"
+	  "url": "https://www.youtube.com/embed/MpsXvHMUQ3Q?si=vJkKyAA1lPyddV9x"
 	  },
     "synopsis": "Un grupo de jóvenes descubre un sitio web misterioso que predice sus muertes mientras fantasmas invaden el mundo real.",
     "tags": ["tecnología", "fantasmas", "apocalíptico"],
@@ -276,8 +276,8 @@
     "poster": "images/seance.jpg",
     "trailer":{
 	  "type": "youtube",
-	  "id": "97qfO_k25d0 ",
-	  "url": "https://www.youtube.com/embed/97qfO_k25d0 "
+	  "id": "97qfO_k25d0",
+	  "url": "https://www.youtube.com/embed/97qfO_k25d0"
 	  },
     "synopsis": "Un médium y su esposo se ven envueltos en la desaparición de una niña y fenómenos sobrenaturales.",
     "tags": ["mediums", "secuestro", "sobrenatural"],
@@ -366,8 +366,8 @@
     "poster": "images/gozu.jpg",
     "trailer":{
 	  "type": "youtube",
-	  "id": "1-EOc0NdJVg ",
-	  "url": "https://www.youtube.com/embed/1-EOc0NdJVg "
+	  "id": "1-EOc0NdJVg",
+	  "url": "https://www.youtube.com/embed/1-EOc0NdJVg"
 	  },
     "synopsis": "Un yakuza debe deshacerse de su hermano loco, pero el viaje se convierte en una pesadilla surrealista.",
     "tags": ["surrealista", "yakuza", "bizarro"],
@@ -421,7 +421,7 @@
     "trailer":{
 	  "type": "youtube",
 	  "id": "vCPEJ982dxo",
-	  "url": "https://www.youtube.com/embed/vCPEJ982dxo "
+	  "url": "https://www.youtube.com/embed/vCPEJ982dxo"
 	  },
     "synopsis": "En el Japón medieval, una mujer y su nuera sobreviven asesinando samuráis hasta que un vecino regresa con una máscara misteriosa.",
     "tags": ["medieval", "samuráis", "sobrenatural"],

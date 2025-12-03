@@ -292,16 +292,38 @@ async function load(){
       document.getElementById('trailer-close').addEventListener('click',closeModal);
       document.addEventListener('keydown',keyHandler);
 
-      if(movie.trailer && movie.trailer.type==='local'){
-        const v=document.createElement('video'); v.controls=true; v.width=920;
-        const s=document.createElement('source'); s.src=movie.trailer.url; s.type='video/mp4'; v.appendChild(s);
-        content.innerHTML=''; content.appendChild(v);
-        v.addEventListener('ended',()=>{ closeModal(); showRatingForm(movie); });
-      } else if(movie.video){
-        const v=document.createElement('video'); v.controls=true; v.width=920; v.src=movie.video;
-        content.innerHTML=''; content.appendChild(v);
-        v.addEventListener('ended',()=>{ closeModal(); showRatingForm(movie); });
-      } else { content.innerHTML='<p>Trailer no disponible</p>'; }
+      if(movie.trailer){
+        if(movie.trailer.type==='local'){
+        // Trailers locales (MP4)
+          const v=document.createElement('video'); v.controls=true; v.width=920;
+          const s=document.createElement('source'); s.src=movie.trailer.url; s.type='video/mp4'; v.appendChild(s);
+          content.innerHTML=''; content.appendChild(v);
+          v.addEventListener('ended',()=>{ closeModal(); showRatingForm(movie); });
+        }
+        else if(movie.trailer.type==='youtube'){
+          //Trailers de YouTube
+          content.innerHTML=`
+          <iframe
+            width="920"
+            height="518"
+            src="${movie.trailer.url}"
+            title="Trailer de ${movie.title}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        `;
+      }
+      else {
+        content.innerHTML='<p>Tipo de trailer no soportado</p>';
+      }
+} else if(movie.video){
+  const v=document.createElement('video'); v.controls=true; v.width=920; v.src=movie.video;
+  content.innerHTML=''; content.appendChild(v);
+  v.addEventListener('ended',()=>{ closeModal(); showRatingForm(movie); });
+} else { 
+  content.innerHTML='<p>Trailer no disponible</p>'; 
+}
     });
   }
 
