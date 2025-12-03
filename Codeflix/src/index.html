@@ -18,7 +18,7 @@
       </div>
       <div class="tags-inline">
         <button id="tags-toggle" class="tags-toggle">
-          Seleccionar por tags
+          Seleccionar Por Tags
         </button>
         <div id="tags-container" class="tags-container hidden">
           <div id="tags-list">Cargando tags...</div>
@@ -41,48 +41,35 @@
 
 
   <main>
-    <h2>Películas Recomendadas</h2> <!-- Título del carrusel recomendado -->
-    <div class="carousel-wrapper"> <!-- Wrapping del carrusel recomendado -->
-      <button class="arrow left" data-carousel="recommended">❮</button> <!-- Botón anterior -->
-      <div class="carousel-container" id="carousel-recommended"></div> <!-- Contenedor donde se inyectan tarjetas -->
-      <button class="arrow right" data-carousel="recommended">❯</button> <!-- Botón siguiente -->
-    </div>
+    <h2>Películas Recomendadas</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carousel-recommended"></div>
+      </div>
 
-    <h2> Favoritas de Japón</h2> <!-- Título carrusel Japón -->
-    <div class="carousel-wrapper">
-      <button class="arrow left" data-carousel="favoritesJapan">❮</button>
-      <div class="carousel-container" id="carousel-favoritesJapan"></div>
-      <button class="arrow right" data-carousel="favoritesJapan">❯</button>
-    </div>
+      <h2>Favoritas de Japón</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carousel-favoritesJapan"></div>
+      </div>
 
-    <!-- Después de las secciones existentes -->
-<h2> Terror Coreano</h2> <!-- Título carrusel Terror Coreano -->
-<div class="carousel-wrapper">
-  <button class="arrow left" data-carousel="koreanHorror">❮</button>
-  <div class="carousel-container" id="carousel-koreanHorror"></div>
-  <button class="arrow right" data-carousel="koreanHorror">❯</button>
-</div>
+      <h2>Terror Coreano</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carousel-koreanHorror"></div>
+      </div>
 
-<h2> Cine Extremo Francés</h2> <!-- Título carrusel Cine Extremo Francés -->
-<div class="carousel-wrapper">
-  <button class="arrow left" data-carousel="frenchExtreme">❮</button>
-  <div class="carousel-container" id="carousel-frenchExtreme"></div>
-  <button class="arrow right" data-carousel="frenchExtreme">❯</button>
-</div>
-    
-    <h2> Favoritas de España</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" data-carousel="favoritesSpain">❮</button>
-      <div class="carousel-container" id="carousel-favoritesSpain"></div>
-      <button class="arrow right" data-carousel="favoritesSpain">❯</button>
-    </div>
+      <h2>Cine Extremo Francés</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carousel-frenchExtreme"></div>
+      </div>
 
-    <h2> Favoritas de USA</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" data-carousel="favoritesUSA">❮</button>
-      <div class="carousel-container" id="carousel-favoritesUSA"></div>
-      <button class="arrow right" data-carousel="favoritesUSA">❯</button>
-    </div>
+      <h2>Favoritas de España</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carousel-favoritesSpain"></div>
+      </div>
+
+      <h2>Favoritas de USA</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-container" id="carousel-favoritesUSA"></div>
+      </div>s
 
     <!-- Sección con todas las películas paginadas (solo imagen + título) -->
     <section id="all-movies">
@@ -116,28 +103,33 @@
         <article class="about-card">
           <h3>Contacto</h3>
           
-          <form id="contactForm" class="contact-form"> <!-- Formulario de contacto (enviado por main.js) -->
+          <form id="contactForm" class="contact-form">
             <label>
               Nombre:
-              <input type="text" name="name" required> <!-- Campo nombre -->
+              <input type="text" name="name" required placeholder="Luis Rey">
             </label>
             <label>
               Correo electrónico:
-              <input type="email" name="email" required> <!-- Campo email -->
+              <input type="email" name="email" required placeholder="LuisRey@example.com">
             </label>
             <label>
               Mensaje:
-              <textarea name="message" rows="4" required></textarea> <!-- Campo mensaje -->
+              <textarea name="message" rows="4" required placeholder="Excelente trabajo..."></textarea>
             </label>
             
-            <button type="submit">Enviar</button> <!-- Botón enviar -->
-            <p id="contactMessage" class="contact-message"></p> <!-- Mensajes de estado -->
+            <button type="submit">Enviar</button>
+            <p id="contactMessage" class="contact-message"></p>
           </form>
+
+          <!-- Div para mostrar los datos enviados -->
+          <div id="submittedData" class="submitted-data"></div>
         </article>
 
       </div>
     </section>
-
+    <footer class="footer">
+      <p>&copy; 2025 CodeFlix. Todos los derechos reservados.</p>
+    </footer>
   </main>
 
   <script src="scripts/main.js"></script> <!-- Script principal del frontend -->

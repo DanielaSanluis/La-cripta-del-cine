@@ -88,20 +88,43 @@ p {
 /* ================================
    2. HEADER Y LAYOUT GENERAL
 ================================ */
+
+/* Header morado profesional */
 header {
-  background: #111;
-  padding: 1.5rem 1rem;
+  background-color: black;       /* morado oscuro */
+  padding: 2rem 1rem;
   position: sticky;
   top: 0;
   z-index: 3000;
-  border-bottom: 2px solid #330000;
+  border-bottom: 2px solid #8A2BE2; /* borde morado más brillante */
+  display: flex;
+  align-items: center;
 }
 
+/* Título principal */
 header h1 {
-  margin-bottom: 1.5rem;
-  font-size: 2.5rem;
+  flex-grow: 1;
+  margin: 0;
+  padding-left: 2rem;             /* espacio a la izquierda */
+  font-size: 3rem;                 /* grande para destacar */
+  color: #E6E6FA;                  /* morado muy claro/lavanda para contraste */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
+/* Links o botones del header */
+header nav a {
+  color: #E6E6FA;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+header nav a:hover {
+  color: #D8BFD8; /* morado más claro al pasar el mouse */
+}
 header .search-row {
   display: flex;
   flex-wrap: wrap;
@@ -197,50 +220,45 @@ header .search-row input#search:focus {
 /* ================================
    3. TAGS – Ajuste final
 ================================*/
-.tags-inline {
-  position: relative;
-  display: inline-block;
-}
 
+/* Toggle mejorado */
 .tags-toggle {
   display: inline-flex;
-  align-items: center;  /* centra verticalmente texto y flecha */
+  align-items: center;
   gap: 6px;
   padding: 6px 12px;
   background: #111;
   color: #ffd9d9;
   border: 1px solid #333;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  transition: all 0.3s ease;
   font-size: 0.95rem;
-  font-weight: 500;
-  position: relative;
+  font-weight: 600;
+  text-shadow: 0 0 2px #ff1a1a;
 }
 
 .tags-toggle:hover {
-  background: #222;
+  background: #220000;
   color: #fff;
+  box-shadow: 0 0 10px #ff4b4b;
 }
 
-/* Flecha Unicode alineada */
-/* Flecha dinámica antes del texto del botón */
+/* Flecha dinámica */
 .tags-toggle::before {
-  content: '▾';               /* flecha hacia abajo */
+  content: '▾';
   font-size: 0.85rem;
-  color: #ffd9d9;
+  color: #ff4b4b;
   display: inline-block;
-  margin-right: 6px;          /* espacio entre la flecha y el texto */
-  vertical-align: middle;     
+  margin-right: 6px;
+  vertical-align: middle;
   transition: transform 0.3s, color 0.3s;
 }
 
-/* Rotación al abrir */
 .tags-toggle.open::before {
-  transform: rotate(180deg);  /* flecha hacia arriba */
-  color: #fff;                /* opcional: cambia color al abrir */
+  transform: rotate(180deg);
+  color: #ff7777;
 }
-
 
 /* Contenedor desplegable */
 .tags-container {
@@ -249,81 +267,124 @@ header .search-row input#search:focus {
   top: calc(100% + 8px);
   right: 0;
   width: 320px;
-  max-height: 240px;
+  max-height: 300px; /* altura limitada para scroll */
   overflow-y: auto;
+  overflow-x: hidden;
   background: rgba(0,0,0,0.95);
   border: 1px solid #222;
   padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(255,0,0,0.4);
   z-index: 100;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  direction: rtl; /* Scrollbar vertical a la izquierda */
 }
 
-.tags-container.hidden { display: none; }
+
+.tags-container.hidden { 
+  display: none; 
+}
+
+/* Scrollbar vertical personalizado */
+.tags-container::-webkit-scrollbar {
+  width: 16px;
+}
+
+.tags-container::-webkit-scrollbar-track {
+  background: #220000;
+  border-radius: 4px;
+}
+
+.tags-container::-webkit-scrollbar-thumb {
+  background-color: #ff4b4b;
+  border-radius: 4px;
+  border: 2px solid #220000;
+}
 
 .tags-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column; /* columna vertical */
+  gap: 10px;
+  flex-wrap: nowrap;
 }
+
 
 .tags-list label {
   cursor: pointer;
-  font-size: 0.85rem;
-  color: #ffb3b3;
-  background: #220000;
-  padding: 2px 8px;
-  border-radius: 12px;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff4b4b;
+  background: linear-gradient(145deg, #220000, #330000);
+  padding: 6px 14px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 6px #ff1a1a, 0 0 12px #ff4b4b;
+  text-shadow: 0 0 4px #ff1a1a;
 }
 
+/* Hover */
 .tags-list label:hover {
-  background: #330000;
+  background: linear-gradient(145deg, #330000, #440000);
   color: #fff;
+  box-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff4b4b;
+  transform: translateY(-2px) scale(1.05);
 }
 
+/* Estado seleccionado */
+.tags-list label.selected {
+  background: linear-gradient(145deg, #660000, #990000); /* rojo intenso */
+  color: #fff; /* texto brillante */
+  box-shadow: 0 0 15px #ff1a1a, 0 0 30px #ff4b4b; /* resplandor intenso */
+  transform: translateY(-3px) scale(1.1); /* destaca del resto */
+}
+#tags-list input[type="checkbox"] {
+  accent-color: #ff4b4b; /* rojo terrorífico */
+}
 /* ================================
    4. CARRUSEL
-================================ */
+================================ *//* Limitar ancho del carrusel y centrarlo */
 .carousel-wrapper {
-  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1.5rem auto;
-  width: 80%;
-  overflow: hidden;
+  position: relative;
+  margin: 2rem 0;          /* más espacio arriba y abajo */
+  padding: 0 4rem;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 320px;       /* altura mínima para que no se vea comprimido */
+}
+
+.arrow {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  padding: 0 10px;
+}
+
+.arrow.left {
+  margin-right: 20px;       /* separación del carrusel */
+}
+
+.arrow.right {
+  margin-left: 20px;        /* separación del carrusel */
+}
+
+.arrow:hover {
+  color: #ff0000;
+  transform: scale(1.1);
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .carousel-container {
-  display: flex;
+  flex: 1;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 15px;
-  width: 100%;
-  padding: 10px;
 }
-
-.carousel-container::-webkit-scrollbar { display: none; }
-
-.arrow {
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  font-size: 2rem;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: background 0.3s;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-}
-
-.arrow:hover { background: rgba(255, 255, 255, 0.3); }
-.arrow.left { left: 0; }
-.arrow.right { right: 0; }
 
 .carousel {
   display: flex;
@@ -331,28 +392,39 @@ header .search-row input#search:focus {
   align-items: flex-start;
 }
 
+.carousel .card {
+  height: 230px;
+  width: 160px;       /* más compacto */
+  margin: 0 8px;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
 /* ================================
    5. TARJETAS
 ================================ */
+
 .card,
 .movie-small {
-  width: 180px;           /* ancho fijo */
+  width: 180px;
   flex: 0 0 auto;
   text-align: center;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: visible; /* <- aquí se recorta todo lo que sobresalga */
   cursor: pointer;
   transition: transform 0.3s;
   display: flex;
   flex-direction: column;
 }
 
-.card img,
-.movie-small img {
-  aspect-ratio: 180 / 260; /* fuerza la proporción exacta */
-  width: 100%;
-  object-fit: cover;
-  border-radius: 10px;
+.movie-small-title {
+  margin: 8px 0 0 0;
+  color: #fff;
+  font-size: 1rem;       /* un poco más grande */
+  white-space: normal;   /* permite varias líneas */
+  overflow-wrap: break-word;
 }
 
 .card-title,
@@ -361,6 +433,7 @@ header .search-row input#search:focus {
   color: #fff;
   font-size: 0.95rem;
 }
+
 
 /* ================================
    6. DETALLE DE PELÍCULA
@@ -386,9 +459,12 @@ header .search-row input#search:focus {
 
 .movie-detail .poster {
   width: 220px;
-  height: 320px;
-  object-fit: cover;
+  height: auto;                   /* deja que la altura se ajuste */
+  max-height: 320px;              /* opcional: limita altura */
+  object-fit: contain;             /* muestra toda la imagen */
   border-radius: 6px;
+  background-color: #111;          /* relleno oscuro si la imagen no ocupa todo */
+  display: block;
 }
 
 .movie-detail .info h1 { margin: 0 0 0.5rem 0; color: #ff8080; }
@@ -578,49 +654,72 @@ header .search-row input#search:focus {
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-  margin: 1rem 0;
+  gap: 16px;
+  margin: 2rem auto;           /* margen arriba y abajo + centrado */
+  max-width: 1200px;           /* limita ancho del grid para que no ocupe toda la pantalla */
+  padding: 0 20px;             /* espacio lateral desde la pantalla */
 }
 
 .movie-small {
   cursor: pointer;
   text-align: center;
-  padding: 6px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 6px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.movie-small:hover {
+  transform: translateY(-5px); /* efecto de elevación al pasar el mouse */
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .movie-small img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: auto;       /* deja que la altura se ajuste proporcionalmente */
+  max-height: 300px;  /* opcional: limita altura para que no sea gigante */
+  object-fit: contain; /* muestra toda la imagen sin recortarla */
   border-radius: 6px;
+  background: #000;   /* opcional: relleno negro para bordes si la imagen no ocupa todo el contenedor */
 }
 
 .movie-small-title {
-  margin: 6px 0 0 0;
-  font-size: 0.95rem;
+  margin: 8px 0 0 0;
+  font-size: 1rem;
   color: #fff;
 }
 
 .pagination {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   justify-content: center;
-  margin-bottom: 1.2rem;
+  margin: 2rem 0;
 }
 
 .page-btn {
-  padding: 6px 10px;
+  padding: 8px 12px;
   background: #111;
   color: #fff;
   border-radius: 6px;
   border: 1px solid #333;
   cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.page-btn[disabled] { opacity: 0.4; cursor: default; }
-.page-btn.active { background: #ff4040; border-color: #ff4040; }
+.page-btn:hover:not([disabled]) {
+  background: #222;
+  border-color: #555;
+}
+
+.page-btn[disabled] { 
+  opacity: 0.4; 
+  cursor: default; 
+}
+
+.page-btn.active { 
+  background: #ff4040; 
+  border-color: #ff4040; 
+}
 
 /* ================================
    12. ABOUT / CONTACT
@@ -726,3 +825,13 @@ header .search-row input#search:focus {
   text-shadow: 0 0 5px #ff2b2b, 0 0 10px #ff7b00;
 }
 
+/* Footer estilo profesional */
+.footer {
+  background-color: #4B0082;       /* mismo morado que el header */
+  color: #E6E6FA;                  /* texto claro para contraste */
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border-top: 2px solid #8A2BE2;   /* borde superior para separar del contenido */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;               /* tamaño discreto */
+}

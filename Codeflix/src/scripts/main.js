@@ -1,4 +1,8 @@
 // ================================
+// main.js - reorganizado y corregido
+// ================================
+
+// ================================
 // UTILIDADES
 // ================================
 
@@ -20,6 +24,181 @@ function escapeHtml(s) {
 }
 
 // ================================
+// VARIABLES GLOBALES
+// ================================
+let allMovies = [];
+const PAGE_SIZE = 14;
+
+// ================================
+// CARRUSELES - BOTONES DE SCROLL
+// ================================
+function setupCarouselButtonsSingle(wrapperEl) {
+  if (!wrapperEl) return;
+
+  // Encontrar botones y el track dentro de este wrapper
+  const btnLeft = wrapperEl.querySelector('.arrow.left');
+  const btnRight = wrapperEl.querySelector('.arrow.right');
+  const track = wrapperEl.querySelector('.carousel-container, .carousel-track');
+
+  if (!track) return;
+
+  // función de scroll reusable
+  const doScroll = (dir) => {
+    const amount = Math.round(track.clientWidth * 0.8) || 300;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+
+    if (dir === 'left') {
+      if (track.scrollLeft <= 0) track.scrollTo({ left: maxScroll, behavior: 'instant' });
+      else track.scrollBy({ left: -amount, behavior: 'smooth' });
+    } else {
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) track.scrollTo({ left: 0, behavior: 'instant' });
+      else track.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+  };
+
+  // Reemplazamos onclick (evita handlers duplicados)
+  if (btnLeft) {
+    btnLeft.onclick = (ev) => {
+      ev.stopPropagation();
+      doScroll('left');
+    };
+  }
+
+  if (btnRight) {
+    btnRight.onclick = (ev) => {
+      ev.stopPropagation();
+      doScroll('right');
+    };
+  }
+
+  // También soportamos teclado (flechas izquierda/derecha cuando el track está enfocado)
+  track.onkeydown = (ev) => {
+    if (ev.key === 'ArrowLeft') { ev.preventDefault(); doScroll('left'); }
+    if (ev.key === 'ArrowRight') { ev.preventDefault(); doScroll('right'); }
+  };
+
+  // Optional: allow dragging on desktop/touch swipes on mobile (lightweight)
+  let isDown = false, startX = 0, scrollLeftStart = 0;
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    track.classList.add('dragging');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeftStart = track.scrollLeft;
+  });
+  window.addEventListener('mouseup', () => {
+    if (isDown) { isDown = false; track.classList.remove('dragging'); }
+  });
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1; // scroll-fast multiplier
+    track.scrollLeft = scrollLeftStart - walk;
+  });
+
+  // Simple touch swipe
+  let touchStartX = 0, touchStartScroll = 0;
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].pageX;
+    touchStartScroll = track.scrollLeft;
+  }, { passive: true });
+  track.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX;
+    const dx = x - touchStartX;
+    track.scrollLeft = touchStartScroll - dx;
+  }, { passive: true });
+}
+// ================================
+// RENDER CARRUSELES 
+// ================================
+function renderCarousel(title, ids, containerId, key) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const wrapper = container.parentElement; 
+  wrapper.innerHTML = "";
+
+  if (!key) {
+    key = containerId.replace("carousel-", "");
+  }
+
+  const movies = ids.map(id => allMovies.find(m => m.id === id)).filter(Boolean);
+
+  // Botón izquierdo
+  const btnLeft = document.createElement("button");
+  btnLeft.className = "arrow left";
+  btnLeft.innerHTML = "❮";
+
+  // Botón derecho
+  const btnRight = document.createElement("button");
+  btnRight.className = "arrow right";
+  btnRight.innerHTML = "❯";
+
+  // Track
+  const track = document.createElement("div");
+  track.className = "carousel-container carousel-track";
+
+  const list = document.createElement("div");
+  list.className = "carousel";
+  list.innerHTML = movies.map(m => `
+    <div class="card" onclick="openMovie(${m.id})">
+      <img src="${escapeHtml(m.poster)}" alt="${escapeHtml(m.title)}">
+      <p class="card-title">${escapeHtml(m.title)}</p>
+    </div>
+  `).join("");
+
+  track.appendChild(list);
+
+  wrapper.appendChild(btnLeft);
+  wrapper.appendChild(track);
+  wrapper.appendChild(btnRight);
+
+  setupCarouselButtonsSingle(wrapper);
+}
+
+function renderSearchCarousel(filtered) {
+  const main = document.querySelector('main');
+  if (!main) return;
+
+  document.getElementById('search-results-section')?.remove();
+
+  const sec = document.createElement('section');
+  sec.id = 'search-results-section';
+  sec.innerHTML = `<h2>Resultados (${filtered.length})</h2>`;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'carousel-wrapper';
+
+  const btnLeft = document.createElement('button');
+  btnLeft.className = 'arrow left'; btnLeft.textContent = '❮';
+  const btnRight = document.createElement('button');
+  btnRight.className = 'arrow right'; btnRight.textContent = '❯';
+
+  const track = document.createElement('div');
+  track.className = 'carousel-container carousel-track';
+  track.tabIndex = 0;
+
+  const list = document.createElement('div');
+  list.className = 'carousel';
+  list.innerHTML = filtered.map(m => `
+    <div class="card" onclick="openMovie(${m.id})">
+      <img src="${escapeHtml(m.poster)}" alt="${escapeHtml(m.title)}">
+      <p class="card-title">${escapeHtml(m.title)}</p>
+    </div>
+  `).join('');
+
+  track.appendChild(list);
+  wrapper.appendChild(btnLeft);
+  wrapper.appendChild(track);
+  wrapper.appendChild(btnRight);
+  sec.appendChild(wrapper);
+  main.insertBefore(sec, document.getElementById('all-movies'));
+
+  setupCarouselButtonsSingle(wrapper);
+}
+
+
+// ================================
 // FILTROS Y TAGS
 // ================================
 
@@ -32,9 +211,9 @@ function renderTagsFilter() {
   allMovies.forEach(m => (m.tags || []).forEach(t => { if (t) tags.add(String(t).trim()); }));
   const arr = Array.from(tags).sort((a, b) => a.localeCompare(b));
 
-  if (!arr.length) { 
-    tagsEl.innerHTML = '<em>No hay tags</em>'; 
-    return; 
+  if (!arr.length) {
+    tagsEl.innerHTML = '<em>No hay tags</em>';
+    return;
   }
 
   tagsEl.innerHTML = arr.map(t => `
@@ -43,7 +222,16 @@ function renderTagsFilter() {
     </label>
   `).join('');
 
-  tagsEl.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', applyFilters));
+  tagsEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const label = cb.closest('label');
+      if (cb.checked) label.classList.add('selected');
+      else label.classList.remove('selected');
+
+      applyFilters();
+    });
+  });
+  
 }
 
 // Aplicar filtros de búsqueda, métricas y tags
@@ -70,46 +258,65 @@ function applyFilters(e) {
     const countEl = document.getElementById('results-count');
     const filtersActive = Boolean(q) || goreMin > 0 || scaresMin > 0 || jumpsMin > 0 || suspMin > 0 || selectedTags.length > 0;
 
+    const allMoviesGrid = document.getElementById('all-movies');
+    const allMoviesTitle = allMoviesGrid?.previousElementSibling?.tagName === 'H2' ? allMoviesGrid.previousElementSibling : null;
+
     // --- SIN RESULTADOS ---
-    if (filtersActive && filtered.length === 0) {
-      if (countEl) countEl.innerText = '0';
+    // --- SIN RESULTADOS ---
+if (filtered.length === 0) {
+  if (allMoviesGrid) allMoviesGrid.style.display = 'none';
+  if (allMoviesTitle) allMoviesTitle.style.display = 'none';
 
-      // Ocultar todos los carruseles originales
-      document.querySelectorAll('.carousel-wrapper').forEach(el => el.style.display = 'none');
+  const main = document.querySelector('main');
 
-      // Mostrar mensaje de no resultados
-      const main = document.querySelector('main');
-      let msg = document.getElementById('no-results-message');
-      if (!msg) {
-        msg = document.createElement('div');
-        msg.id = 'no-results-message';
-        msg.style.color = '#ff4b4b';
-        msg.style.fontSize = '1.5rem';
-        msg.style.margin = '3rem 0 1.5rem 0';
-        msg.style.textAlign = 'center';
-        main.insertBefore(msg, document.getElementById('all-movies'));
-      }
-      msg.innerHTML = `No encontramos nada 😢, pero mira algo de <strong>Terror Coreano</strong> mientras tanto:`;
+  // Contenedor principal de sugerencias
+  let suggestionWrapper = document.getElementById('suggested-carousel-wrapper');
+  if (!suggestionWrapper) {
+    suggestionWrapper = document.createElement('div');
+    suggestionWrapper.id = 'suggested-carousel-wrapper';
+    suggestionWrapper.style.display = 'flex';
+    suggestionWrapper.style.flexDirection = 'column';
+    suggestionWrapper.style.alignItems = 'center';
+    suggestionWrapper.style.margin = '2rem auto';
+    main.insertBefore(suggestionWrapper, allMoviesGrid);
+  } else {
+    suggestionWrapper.innerHTML = '';
+    suggestionWrapper.style.display = 'flex';
+  }
 
-      // Renderizar lista completa de películas
-      renderAllMovies._overrideList = null; // usar toda la lista
-      renderAllMovies(1);
+  // --- Mensaje ---
+  const msg = document.createElement('div');
+  msg.id = 'no-results-message';
+  msg.style.color = '#ff4b4b';
+  msg.style.fontSize = '1.5rem';
+  msg.style.margin = '0 0 1.5rem 0';
+  msg.style.textAlign = 'center';
+  msg.innerHTML = `No encontramos nada 😢, pero mira algo de <strong>Terror Coreano</strong> mientras tanto:`;
+  suggestionWrapper.appendChild(msg);
 
-      // Renderizar carrusel sugerido "Terror Coreano" **debajo del mensaje**
-      let suggestionWrapper = document.getElementById('suggested-carousel-wrapper');
-      if (!suggestionWrapper) {
-        suggestionWrapper = document.createElement('div');
-        suggestionWrapper.id = 'suggested-carousel-wrapper';
-        suggestionWrapper.style.margin = '2rem auto';
-        main.insertBefore(suggestionWrapper, document.getElementById('all-movies'));
-      }
+  // --- Contenedor independiente para el carrusel ---
+  const carouselWrapper = document.createElement('div');
+  carouselWrapper.id = 'carousel-koreanHorror-wrapper';
+  carouselWrapper.className = 'carousel-wrapper';
+  suggestionWrapper.appendChild(carouselWrapper);
 
-      // Renderizar carrusel dentro del wrapper
-      renderCarousel("Terror Coreano", (window.G_carousels?.koreanHorror) || [], "suggested-carousel-wrapper");
-      suggestionWrapper.style.display = 'flex';
+  // Crear un div “limpio” para renderCarousel
+  const carouselContainer = document.createElement('div');
+  carouselContainer.id = 'carousel-koreanHorror';
+  carouselWrapper.appendChild(carouselContainer);
 
-      return; // Salimos de applyFilters
-    }
+  // Renderizar carrusel dentro de este contenedor limpio
+  renderCarousel(
+    'Terror Coreano',
+    (window.G_carousels?.koreanHorror) || [],
+    'carousel-koreanHorror'
+  );
+
+  // Activar flechas
+  setupCarouselButtonsSingle(carouselWrapper);
+}
+
+
 
     // quitar mensaje si existe
     const msg = document.getElementById('no-results-message');
@@ -118,38 +325,48 @@ function applyFilters(e) {
     // --- HAY RESULTADOS ---
     if (filtersActive) {
       if (countEl) countEl.innerText = String(filtered.length);
-      renderAllMovies._overrideList = filtered;
-      renderAllMovies(1);
-      renderSearchCarousel(filtered);
 
-      // ocultar carruseles originales
+      // ocultar grid principal
+      if (allMoviesGrid) allMoviesGrid.style.display = 'none';
+      if (allMoviesTitle) allMoviesTitle.style.display = 'none';
+
+      // ocultar carruseles originales (excepto sugerido)
       document.querySelectorAll('.carousel-wrapper').forEach(el => {
-        el.style.display = 'none';
+        if (!el.closest('#suggested-carousel-wrapper')) el.style.display = 'none';
         const prev = el.previousElementSibling;
         if (prev && prev.tagName === 'H2') prev.style.display = 'none';
       });
 
+      // renderizar carrusel de búsqueda
+      renderSearchCarousel(filtered);
+      const searchWrapper = document.getElementById('search-results-section')?.querySelector('.carousel-wrapper');
+      if (searchWrapper) setupCarouselButtonsSingle(searchWrapper);
+
     } else {
-      // restaurar carruseles y títulos
-      document.querySelectorAll('.carousel-wrapper').forEach(el => {
-        el.style.display = 'flex';
-        const prev = el.previousElementSibling;
-        if (prev && prev.tagName === 'H2') prev.style.display = '';
-      });
+      // Restaurar grid principal y títulos
+      if (allMoviesGrid) allMoviesGrid.style.display = '';
+      if (allMoviesTitle) allMoviesTitle.style.display = '';
 
       if (countEl) countEl.innerText = String(allMovies.length);
       renderAllMovies._overrideList = null;
-      const old = document.getElementById('search-results-section'); if (old) old.remove();
+      const old = document.getElementById('search-results-section'); 
+      if (old) old.remove();
 
       // re-renderizar carruseles originales
-      renderCarousel("", (window.G_carousels && window.G_carousels.recommended) || [], "carousel-recommended");
-      renderCarousel("Favoritas de Japón", (window.G_carousels && window.G_carousels.favoritesJapan) || [], "carousel-favoritesJapan");
-      renderCarousel("Favoritas de España", (window.G_carousels && window.G_carousels.favoritesSpain) || [], "carousel-favoritesSpain");
-      renderCarousel("Favoritas de USA", (window.G_carousels && window.G_carousels.favoritesUSA) || [], "carousel-favoritesUSA");
-      renderCarousel("Terror Coreano", (window.G_carousels && window.G_carousels.koreanHorror) || [], "carousel-koreanHorror");
-      renderCarousel("Cine Extremo Francés", (window.G_carousels && window.G_carousels.frenchExtreme) || [], "carousel-frenchExtreme");
+      Object.entries(window.G_carousels || {}).forEach(([key, ids]) => {
+        const containerId = `carousel-${key}`;
+        const titleMap = {
+          recommended: '',
+          favoritesJapan: 'Favoritas de Japón',
+          favoritesSpain: 'Favoritas de España',
+          favoritesUSA: 'Favoritas de USA',
+          koreanHorror: 'Terror Coreano',
+          frenchExtreme: 'Cine Extremo Francés'
+        };
+        renderCarousel(titleMap[key], ids, containerId, key);
+      });
+
       renderAllMovies(1);
-      setupCarouselButtons();
     }
 
   } catch (err) {
@@ -160,8 +377,11 @@ function applyFilters(e) {
 
 // Limpiar filtros y restaurar estado inicial
 function clearFilters() {
-  document.getElementById('search').value = '';
-  ['filter-gore','filter-scares','filter-jumps','filter-suspense'].forEach(id => document.getElementById(id).value = '0');
+  if (document.getElementById('search')) document.getElementById('search').value = '';
+  ['filter-gore','filter-scares','filter-jumps','filter-suspense'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '0';
+  });
   document.querySelectorAll('#tags-list input[type=checkbox]').forEach(cb => cb.checked = false);
 
   // Cerrar tags desplegable
@@ -170,12 +390,13 @@ function clearFilters() {
 
   // Restaurar carruseles y lista completa
   document.querySelectorAll('.carousel-wrapper').forEach(el => el.style.display = 'flex');
-  document.querySelectorAll('h2').forEach(h => { 
-    if (h.parentElement?.querySelector('.carousel-wrapper')) h.style.display = ''; 
+  document.querySelectorAll('h2').forEach(h => {
+    if (h.parentElement?.querySelector('.carousel-wrapper')) h.style.display = '';
   });
 
   renderAllMovies._overrideList = null;
-  document.getElementById('results-count').innerText = String(allMovies.length);
+  const rc = document.getElementById('results-count');
+  if (rc) rc.innerText = String(allMovies.length);
   renderAllMovies(1);
 
   Object.entries(window.G_carousels || {}).forEach(([key, ids]) => {
@@ -188,17 +409,11 @@ function clearFilters() {
       koreanHorror: 'Terror Coreano',
       frenchExtreme: 'Cine Extremo Francés'
     };
-    renderCarousel(titleMap[key], ids, containerId);
+    renderCarousel(titleMap[key], ids, containerId, key);
   });
 
-  setupCarouselButtons();
+  // NOTA: setupCarouselButtons ya fue ejecutado por cada renderCarousel
 }
-
-// ================================
-// VARIABLES GLOBALES
-// ================================
-let allMovies = [];
-const PAGE_SIZE = 14;
 
 // ================================
 // INICIALIZACIÓN
@@ -210,10 +425,10 @@ async function init() {
   // Cargar datos
   allMovies = await fetchJSON("/api/movies");
   const carousels = await fetchJSON("/api/carousels");
-  window.G_carousels = carousels;
+  window.G_carousels = carousels || {};
 
-  // Renderizar carruseles iniciales
-  Object.entries(carousels).forEach(([key, ids]) => {
+  // Renderizar carruseles iniciales (solo los containers que existan)
+  Object.entries(window.G_carousels).forEach(([key, ids]) => {
     const containerId = `carousel-${key}`;
     const titleMap = {
       recommended: '',
@@ -223,12 +438,12 @@ async function init() {
       koreanHorror: 'Terror Coreano',
       frenchExtreme: 'Cine Extremo Francés'
     };
-    renderCarousel(titleMap[key], ids, containerId);
+    renderCarousel(titleMap[key], ids, containerId, key);
   });
 
   // Inicializar filtros y listeners
   renderTagsFilter();
-  document.getElementById("search").addEventListener("input", applyFilters);
+  document.getElementById("search")?.addEventListener("input", applyFilters);
   ['filter-gore','filter-scares','filter-jumps','filter-suspense'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', applyFilters);
   });
@@ -248,7 +463,7 @@ async function init() {
   document.getElementById('clear-filters')?.addEventListener('click', clearFilters);
 
   renderAllMovies(1);
-  setupCarouselButtons();
+  // NOTA: no llamamos setupCarouselButtons() aquí — ya se ejecuta desde cada renderCarousel/renderSearchCarousel
 }
 
 // ================================
@@ -269,8 +484,8 @@ function renderAllMovies(page = 1) {
 
   grid.innerHTML = pageItems.map(m => `
     <div class="movie-small" onclick="openMovie(${m.id})">
-      <img src="${m.poster}" alt="${m.title}" />
-      <p class="movie-small-title">${m.title}</p>
+      <img src="${escapeHtml(m.poster)}" alt="${escapeHtml(m.title)}" />
+      <p class="movie-small-title">${escapeHtml(m.title)}</p>
     </div>
   `).join('');
 
@@ -297,70 +512,6 @@ function renderAllMovies(page = 1) {
 }
 
 // ================================
-// CARRUSELES
-// ================================
-function renderCarousel(title, ids, containerId) {
-  const container = document.getElementById(containerId);
-  const movies = ids.map(id => allMovies.find(m => m.id === id)).filter(Boolean);
-  container.innerHTML = `<div class="carousel">${movies.map(m => `
-    <div class="card" onclick="openMovie(${m.id})">
-      <img src="${m.poster}" alt="${m.title}" />
-      <p class="card-title">${m.title}</p>
-    </div>`).join("")}</div>`;
-}
-
-// Botones de scroll del carrusel
-function setupCarouselButtons() {
-  document.querySelectorAll('.arrow').forEach(btn => {
-    btn.onclick = () => {
-      const key = btn.dataset.carousel; 
-      const container = document.getElementById(`carousel-${key}`);
-      if (!container) return;
-
-      const amount = Math.round(container.clientWidth * 0.8) || 300;
-      const maxScroll = container.scrollWidth - container.clientWidth;
-
-      if (btn.classList.contains('left')) {
-        if (container.scrollLeft <= 0) container.scrollTo({ left: maxScroll, behavior: 'instant' });
-        else container.scrollBy({ left: -amount, behavior: 'smooth' });
-      } else {
-        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 5) container.scrollTo({ left: 0, behavior: 'instant' });
-        else container.scrollBy({ left: amount, behavior: 'smooth' });
-      }
-    };
-  });
-}
-
-// Carrusel de resultados de búsqueda
-function renderSearchCarousel(filtered) {
-  const main = document.querySelector('main');
-  const old = document.getElementById('search-results-section');
-  if (old) old.remove();
-
-  const sec = document.createElement('section');
-  sec.id = 'search-results-section';
-  sec.innerHTML = `
-    <h2>Resultados (${filtered.length})</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" data-carousel="search">❮</button>
-      <div class="carousel-container" id="carousel-search">
-        <div class="carousel">
-          ${filtered.map(m => `
-            <div class="card" onclick="openMovie(${m.id})">
-              <img src="${m.poster}" alt="${escapeHtml(m.title)}" />
-              <p class="card-title">${escapeHtml(m.title)}</p>
-            </div>`).join('')}
-        </div>
-      </div>
-      <button class="arrow right" data-carousel="search">❯</button>
-    </div>
-  `;
-
-  main.insertBefore(sec, document.getElementById('all-movies'));
-  setupCarouselButtons();
-}
-
-// ================================
 // FUNCIONES AUXILIARES
 // ================================
 function openMovie(id) {
@@ -370,66 +521,47 @@ function openMovie(id) {
 // ================================
 // FORMULARIO DE CONTACTO
 // ================================
-// Espera a que todo el DOM esté cargado antes de ejecutar el script
 document.addEventListener("DOMContentLoaded", () => {
-  // Obtiene el formulario y el contenedor donde se mostrarán los mensajes al usuario
   const form = document.getElementById("contactForm");
   const msg = document.getElementById("contactMessage");
-  // Si el formulario o el mensaje no existen, el script no hace nada
   if (!form || !msg) return;
 
-    // Agrega un listener al evento "submit" del formulario
-    form.addEventListener("submit", async (e) => {
-    e.preventDefault();// Evita que la página se recargue al enviar el formulario
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    // Obtiene todos los datos del formulario
     const data = new FormData(form);
     const name = (data.get("name") || "").trim();
     const email = (data.get("email") || "").trim();
-    const message = (data.get("message") || "").trim(); // no se valida
+    const message = (data.get("message") || "").trim();
 
-    /**
-     * Expresión regular para validar correos electrónicos permitidos.
-     * Acepta dominios específicos como:
-     * - Gmail (com, mx, es, com.mx)
-     * - Hotmail (com, es)
-     * - Outlook (com, es, com.mx)
-     * - ciencias.unam.mx
-     */
     const emailRegex = /^[^\s@]+@(gmail\.(com|mx|es|com\.mx)|hotmail\.(com|es)|outlook\.(com|es|com\.mx)|ciencias\.unam\.mx)$/i;
 
-    // Verifica que el nombre no esté vacío y tenga al menos 2 caracteres
     if (!name || name.length < 2) {
-    msg.textContent = "Nombre inválido. Introduce un nombre válido.";
-    return;
+      msg.textContent = "Nombre inválido. Introduce un nombre válido.";
+      return;
     }
 
-     // Verifica que el correo cumpla con el patrón de la regex
     if (!emailRegex.test(email)) {
       msg.textContent = "Por favor ingresa un correo electrónico válido.";
       return;
     }
 
     try {
-      // Realiza una petición POST a la ruta "/api/contact"
       const r = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message })
       });
 
-       // Si el servidor responde con error, lanza excepción
       if (!r.ok) throw new Error("No se pudo enviar");
 
       msg.textContent = "¡Gracias! Tu mensaje ha sido guardado.";
       form.reset();
     } catch (err) {
-      // Si ocurre un error en la petición fetch, se captura aquí
       console.error(err);
       msg.textContent = "Ups, hubo un error al enviar.";
     }
 
-    // Limpia el mensaje después de 3 segundos
     setTimeout(() => (msg.textContent = ""), 3000);
   });
 });
