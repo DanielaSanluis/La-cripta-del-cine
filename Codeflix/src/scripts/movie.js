@@ -87,7 +87,9 @@ async function load() {
   document.getElementById("send").addEventListener("click", addComment);
 
   // Botón para mostrar el trailer bajo demanda en un modal emergente
-  const showTrailerBtn = document.getElementById('show-trailer');
+    const showTrailerBtn = document.getElementById('show-trailer');
+  console.log('showTrailerBtn encontrado?', showTrailerBtn);
+  console.log('movie object tiene trailer?', movie?.trailer);
   if (showTrailerBtn) {
     showTrailerBtn.addEventListener('click', () => {
       if (showTrailerBtn.dataset.clicked) return; // evitar múltiples aperturas
