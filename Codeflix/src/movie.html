@@ -1,0 +1,21 @@
+<!doctype html> <!-- Tipo de documento -->
+<html lang="es"> <!-- Idioma español -->
+<head>
+  <meta charset="utf-8" /> <!-- Charset UTF-8 -->
+  <title>Detalle película</title> <!-- Título de la página de detalle -->
+  <link rel="stylesheet" href="styles/style.css" /> <!-- Estilos compartidos -->
+</head>
+<body>
+  <header>
+    <h1>CodeFlix</h1> <!-- Cartel / logo del sitio, se mantiene en la página de detalle -->
+  </header>
+  <div id="movie-container"></div> <!-- Contenedor donde movie.js inyecta el detalle -->
+  
+  <!-- El detalle de la película (incluye trailer y el reproductor principal) se inyecta en #movie-container -->
+  <!-- Se mantiene este contenedor vacío por si se requiere renderizar algo adicional desde el servidor -->
+  <div id="trailer-container"></div>
+
+  <!-- Script que maneja el detalle de película y añade el reproductor 'Película' con codeflix.mp4 -->
+  <script src="scripts/movie.js"></script>
+</body>
+</html>
