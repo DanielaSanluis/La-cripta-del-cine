@@ -27,7 +27,7 @@ function escapeHtml(s) {
 // VARIABLES GLOBALES
 // ================================
 let allMovies = [];
-const PAGE_SIZE = 14;
+const PAGE_SIZE = 21;
 
 // ================================
 // CARRUSELES - BOTONES DE SCROLL
@@ -239,7 +239,7 @@ function applyFilters(e) {
   try {
     const q = (document.getElementById('search')?.value || '').trim().toLowerCase();
     const goreMin = Number(document.getElementById('filter-gore')?.value || 0);
-    const scaresMin = Number(document.getElementById('filter-scares')?.value || 0);
+    const miedoMin = Number(document.getElementById('filter-miedo')?.value || 0);
     const jumpsMin = Number(document.getElementById('filter-jumps')?.value || 0);
     const suspMin = Number(document.getElementById('filter-suspense')?.value || 0);
     const selectedTags = Array.from(document.querySelectorAll('#tags-list input[type=checkbox]:checked')).map(i => i.value);
@@ -248,15 +248,24 @@ function applyFilters(e) {
     const filtered = allMovies.filter(m => {
       const textMatch = !q || (m.title && m.title.toLowerCase().includes(q)) || (m.synopsis && m.synopsis.toLowerCase().includes(q));
       const goreOk = (typeof m.gore === 'number' ? m.gore : 0) >= goreMin;
-      const scaresOk = (typeof m.scares === 'number' ? m.scares : 0) >= scaresMin;
-      const jumpsOk = (typeof m.jumpscares === 'number' ? m.jumpscares : 0) >= jumpsMin;
+      // Usar el tag 'miedo' como primario; si no existe, usar 'scares' como fallback
+      const miedoVal = (typeof m.miedo === 'number') ? m.miedo : (typeof m.scares === 'number' ? m.scares : 0);
+      const miedoOk = miedoVal >= miedoMin;
+      // Vincular el filtrado de "jumps" con el campo 'scares' de la base cuando exista.
+      // Si no existe 'scares', usar 'jumps' o 'jumpscares' como fallback.
+      const jumpsValue = (typeof m.scares === 'number') ? m.scares : (typeof m.jumps === 'number') ? m.jumps : (typeof m.jumpscares === 'number') ? m.jumpscares : 0;
+      const jumpsOk = jumpsValue >= jumpsMin;
       const suspOk = (typeof m.suspense === 'number' ? m.suspense : (typeof m.scares === 'number' ? m.scares : 0)) >= suspMin;
       const tagsOk = !selectedTags.length || (m.tags || []).some(t => selectedTags.includes(String(t)));
-      return textMatch && goreOk && scaresOk && jumpsOk && suspOk && tagsOk;
+      return textMatch && goreOk && miedoOk && jumpsOk && suspOk && tagsOk;
     });
 
     const countEl = document.getElementById('results-count');
-    const filtersActive = Boolean(q) || goreMin > 0 || scaresMin > 0 || jumpsMin > 0 || suspMin > 0 || selectedTags.length > 0;
+    const resultsSummaryEl = document.getElementById('results-summary');
+    const filtersActive = Boolean(q) || goreMin > 0 || miedoMin > 0 || jumpsMin > 0 || suspMin > 0 || selectedTags.length > 0;
+
+    // Mostrar el resumen de resultados solo cuando hay una búsqueda/filtrado activo
+    if (resultsSummaryEl) resultsSummaryEl.style.display = filtersActive ? '' : 'none';
 
     const allMoviesGrid = document.getElementById('all-movies');
     const allMoviesTitle = allMoviesGrid?.previousElementSibling?.tagName === 'H2' ? allMoviesGrid.previousElementSibling : null;
@@ -326,9 +335,12 @@ if (filtered.length === 0) {
     if (filtersActive) {
       if (countEl) countEl.innerText = String(filtered.length);
 
-      // ocultar grid principal
-      if (allMoviesGrid) allMoviesGrid.style.display = 'none';
-      if (allMoviesTitle) allMoviesTitle.style.display = 'none';
+      // Mostrar la grilla paginada con los resultados filtrados (no carrusel)
+      if (allMoviesGrid) allMoviesGrid.style.display = '';
+      if (allMoviesTitle) {
+        allMoviesTitle.style.display = '';
+        allMoviesTitle.textContent = `Resultados (${filtered.length})`;
+      }
 
       // ocultar carruseles originales (excepto sugerido)
       document.querySelectorAll('.carousel-wrapper').forEach(el => {
@@ -337,15 +349,20 @@ if (filtered.length === 0) {
         if (prev && prev.tagName === 'H2') prev.style.display = 'none';
       });
 
-      // renderizar carrusel de búsqueda
-      renderSearchCarousel(filtered);
-      const searchWrapper = document.getElementById('search-results-section')?.querySelector('.carousel-wrapper');
-      if (searchWrapper) setupCarouselButtonsSingle(searchWrapper);
+      // Usar la grilla paginada para mostrar los resultados (overrideList)
+      renderAllMovies._overrideList = filtered;
+      renderAllMovies(1);
+      // Asegurar que no quede el antiguo search-results-section
+      document.getElementById('search-results-section')?.remove();
 
     } else {
       // Restaurar grid principal y títulos
       if (allMoviesGrid) allMoviesGrid.style.display = '';
-      if (allMoviesTitle) allMoviesTitle.style.display = '';
+      if (allMoviesTitle) {
+        allMoviesTitle.style.display = '';
+        // Restaurar texto original
+        allMoviesTitle.textContent = 'Todas las películas';
+      }
 
       if (countEl) countEl.innerText = String(allMovies.length);
       renderAllMovies._overrideList = null;
@@ -378,7 +395,7 @@ if (filtered.length === 0) {
 // Limpiar filtros y restaurar estado inicial
 function clearFilters() {
   if (document.getElementById('search')) document.getElementById('search').value = '';
-  ['filter-gore','filter-scares','filter-jumps','filter-suspense'].forEach(id => {
+  ['filter-gore','filter-miedo','filter-jumps','filter-suspense'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '0';
   });
@@ -413,6 +430,15 @@ function clearFilters() {
   });
 
   // NOTA: setupCarouselButtons ya fue ejecutado por cada renderCarousel
+
+  // Quitar cualquier sección residual de búsqueda/sugerencias que pudiera quedar
+  document.getElementById('search-results-section')?.remove();
+  document.getElementById('suggested-carousel-wrapper')?.remove();
+  document.getElementById('no-results-message')?.remove();
+
+  // Ocultar resumen de resultados al limpiar filtros
+  const resultsSummaryEl = document.getElementById('results-summary');
+  if (resultsSummaryEl) resultsSummaryEl.style.display = 'none';
 }
 
 // ================================
@@ -444,7 +470,7 @@ async function init() {
   // Inicializar filtros y listeners
   renderTagsFilter();
   document.getElementById("search")?.addEventListener("input", applyFilters);
-  ['filter-gore','filter-scares','filter-jumps','filter-suspense'].forEach(id => {
+  ['filter-gore','filter-miedo','filter-jumps','filter-suspense'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', applyFilters);
   });
 
@@ -463,6 +489,9 @@ async function init() {
   document.getElementById('clear-filters')?.addEventListener('click', clearFilters);
 
   renderAllMovies(1);
+  // Ocultar resumen de resultados al iniciar (solo mostrar cuando haya búsqueda/filtrado)
+  const resultsSummaryElInit = document.getElementById('results-summary');
+  if (resultsSummaryElInit) resultsSummaryElInit.style.display = 'none';
   // NOTA: no llamamos setupCarouselButtons() aquí — ya se ejecuta desde cada renderCarousel/renderSearchCarousel
 }
 
