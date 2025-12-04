@@ -302,11 +302,15 @@ async function load(){
         }
         else if(movie.trailer.type==='youtube'){
           //Trailers de YouTube
+        // Añadimos autoplay para permitir reproducción automática
+        const autoplayUrl = movie.trailer.url.includes("?")
+          ? movie.trailer.url + "&autoplay=1" //Ponerlo asi: "&autoplay=1&mute=1" en caso de que el navegaro bloquee el video
+          : movie.trailer.url + "?autoplay=1"; //Ponerlo asi: "&autoplay=1&mute=1" en caso de que el navegaro bloquee el video
           content.innerHTML=`
           <iframe
             width="920"
             height="518"
-            src="${movie.trailer.url}"
+            src="${autoplayUrl}"
             title="Trailer de ${movie.title}"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -328,8 +332,22 @@ async function load(){
   }
 
   // Video principal
-  const vid=document.getElementById('movie-video');
-  if(vid) vid.addEventListener('ended',()=>showRatingForm(movie));
+const vid = document.getElementById('movie-video');
+if (vid) {
+  vid.addEventListener('ended', () => {
+
+    const showTrailerBtn = document.getElementById('show-trailer');
+
+    // Si el botón existe, "simular" un click para abrir la ventana emergente
+    if (showTrailerBtn && !showTrailerBtn.dataset.clicked) {
+      showTrailerBtn.click();
+    } else {
+      // Si por alguna razón no se puede abrir el modal, mostramos el form
+      showRatingForm(movie);
+    }
+  });
+}
+
 
   // Botón simular fin
   const sim=document.getElementById('simulate-end');

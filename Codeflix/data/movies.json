@@ -163,10 +163,16 @@
       "tortura",
       "venganza"
     ],
-    "gore": 5,
-    "scares": 4,
+    "gore": 3.7,
+    "scares": 4.3,
     "subgenre": "Psicológico",
-    "comments": []
+    "comments": [],
+    "gore_count": 3,
+    "scares_count": 3,
+    "jumpscares": 5,
+    "jumps_count": 2,
+    "suspense": 5,
+    "suspense_count": 2
   },
   {
     "id": 8,
