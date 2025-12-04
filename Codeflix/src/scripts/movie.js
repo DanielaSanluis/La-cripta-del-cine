@@ -328,8 +328,22 @@ async function load(){
   }
 
   // Video principal
-  const vid=document.getElementById('movie-video');
-  if(vid) vid.addEventListener('ended',()=>showRatingForm(movie));
+const vid = document.getElementById('movie-video');
+if (vid) {
+  vid.addEventListener('ended', () => {
+
+    const showTrailerBtn = document.getElementById('show-trailer');
+
+    // Si el botón existe, "simular" un click para abrir la ventana emergente
+    if (showTrailerBtn && !showTrailerBtn.dataset.clicked) {
+      showTrailerBtn.click();
+    } else {
+      // Si por alguna razón no se puede abrir el modal, mostramos el form
+      showRatingForm(movie);
+    }
+  });
+}
+
 
   // Botón simular fin
   const sim=document.getElementById('simulate-end');
