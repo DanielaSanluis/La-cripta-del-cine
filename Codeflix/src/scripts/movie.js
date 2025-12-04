@@ -302,11 +302,15 @@ async function load(){
         }
         else if(movie.trailer.type==='youtube'){
           //Trailers de YouTube
+        // Añadimos autoplay para permitir reproducción automática
+        const autoplayUrl = movie.trailer.url.includes("?")
+          ? movie.trailer.url + "&autoplay=1" //Ponerlo asi: "&autoplay=1&mute=1" en caso de que el navegaro bloquee el video
+          : movie.trailer.url + "?autoplay=1"; //Ponerlo asi: "&autoplay=1&mute=1" en caso de que el navegaro bloquee el video
           content.innerHTML=`
           <iframe
             width="920"
             height="518"
-            src="${movie.trailer.url}"
+            src="${autoplayUrl}"
             title="Trailer de ${movie.title}"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
