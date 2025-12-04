@@ -645,9 +645,15 @@ async function init() {
   document.getElementById('clear-filters')?.addEventListener('click', clearFilters);
 
   renderAllMovies(1);
-  // Ocultar resumen de resultados al iniciar (solo mostrar cuando haya búsqueda/filtrado)
+  // Mantener visible únicamente el botón "Limpiar filtros" y quitar la leyenda
   const resultsSummaryElInit = document.getElementById('results-summary');
-  if (resultsSummaryElInit) resultsSummaryElInit.style.display = 'none';
+  if (resultsSummaryElInit) {
+    // Reemplazar el contenido por solo el botón (con mismo id para compatibilidad)
+    resultsSummaryElInit.innerHTML = '<button id="clear-filters" class="clear-filters">Limpiar filtros</button>';
+    // Re-attach listener al botón (asegura que siempre funcione aunque hayamos reemplazado el DOM)
+    const clearBtn = resultsSummaryElInit.querySelector('#clear-filters');
+    if (clearBtn) clearBtn.addEventListener('click', clearFilters);
+  }
   // NOTA: no llamamos setupCarouselButtons() aquí — ya se ejecuta desde cada renderCarousel/renderSearchCarousel
 }
 
