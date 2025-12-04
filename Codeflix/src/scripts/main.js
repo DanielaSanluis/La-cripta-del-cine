@@ -267,8 +267,8 @@ function applyFilters(e) {
     // Mostrar el resumen de resultados solo cuando hay una búsqueda/filtrado activo
     if (resultsSummaryEl) resultsSummaryEl.style.display = filtersActive ? '' : 'none';
 
-    const allMoviesGrid = document.getElementById('all-movies');
-    const allMoviesTitle = allMoviesGrid?.previousElementSibling?.tagName === 'H2' ? allMoviesGrid.previousElementSibling : null;
+    let allMoviesGrid = document.getElementById('all-movies');
+    let allMoviesTitle = allMoviesGrid?.previousElementSibling?.tagName === 'H2' ? allMoviesGrid.previousElementSibling : null;
 
     // Quitar mensaje previo de "no-results" si existe (evita que se borre el recién creado)
     const prevNoResults = document.getElementById('no-results-message');
@@ -276,77 +276,121 @@ function applyFilters(e) {
 
     // --- SIN RESULTADOS ---
     // --- SIN RESULTADOS ---
-if (filtered.length === 0) {
-  const main = document.querySelector('main');
+  if (filtered.length === 0) {
+    // Si la ausencia de resultados viene de una búsqueda (campo `search` con texto),
+    // mostramos la sugerencia con el carrusel `favoritesJapan` y retiramos la sección
+    // principal. Si en cambio los 0 resultados vienen de filtros (sin búsqueda),
+    // no mostramos la sugerencia: dejamos la sección principal y mostramos un
+    // mensaje indicando que no hay resultados para los filtros.
+    const main = document.querySelector('main');
 
-  // Contenedor principal de sugerencias
-  let suggestionWrapper = document.getElementById('suggested-carousel-wrapper');
-  if (!suggestionWrapper) {
-    suggestionWrapper = document.createElement('div');
-    suggestionWrapper.id = 'suggested-carousel-wrapper';
-    suggestionWrapper.style.display = 'flex';
-    suggestionWrapper.style.flexDirection = 'column';
-    suggestionWrapper.style.alignItems = 'center';
-    suggestionWrapper.style.margin = '2rem auto';
-    // Insertar la sugerencia en el lugar donde estaba la sección de todas las películas
-    if (allMoviesGrid && allMoviesGrid.parentElement) {
-      allMoviesGrid.parentElement.insertBefore(suggestionWrapper, allMoviesGrid);
-    } else if (main) {
-      main.appendChild(suggestionWrapper);
+    if (q) {
+      // Modo búsqueda: mostrar sugerencia y ocultar la sección principal
+      let suggestionWrapper = document.getElementById('suggested-carousel-wrapper');
+      if (!suggestionWrapper) {
+        suggestionWrapper = document.createElement('div');
+        suggestionWrapper.id = 'suggested-carousel-wrapper';
+        suggestionWrapper.style.display = 'flex';
+        suggestionWrapper.style.flexDirection = 'column';
+        suggestionWrapper.style.alignItems = 'center';
+        suggestionWrapper.style.margin = '2rem auto';
+        if (allMoviesGrid && allMoviesGrid.parentElement) {
+          allMoviesGrid.parentElement.insertBefore(suggestionWrapper, allMoviesGrid);
+        } else if (main) {
+          main.appendChild(suggestionWrapper);
+        }
+      } else {
+        suggestionWrapper.innerHTML = '';
+        suggestionWrapper.style.display = 'flex';
+      }
+
+      // Guardar y eliminar la grilla principal
+      if (allMoviesGrid) {
+        if (!window._allMoviesSectionHtml) window._allMoviesSectionHtml = allMoviesGrid.outerHTML;
+        allMoviesGrid.remove();
+      }
+      // Quitar también el título asociado solo en modo búsqueda
+      if (allMoviesTitle) allMoviesTitle.remove();
+
+      // Mensaje y carrusel recomendado (Favoritas de Japón)
+      const msg = document.createElement('div');
+      msg.id = 'no-results-message';
+      msg.style.color = '#ff4b4b';
+      msg.style.fontSize = '1.5rem';
+      msg.style.margin = '0 0 1.5rem 0';
+      msg.style.textAlign = 'center';
+      msg.innerHTML = `No encontré coincidencias. Te recomiendo que veas algunos <strong>éxitos de Japón</strong>.`;
+      suggestionWrapper.appendChild(msg);
+
+      const carouselWrapper = document.createElement('div');
+      carouselWrapper.id = 'carousel-favoritesJapan-wrapper-suggested';
+      carouselWrapper.className = 'carousel-wrapper';
+      suggestionWrapper.appendChild(carouselWrapper);
+
+      const suggestedId = 'carousel-favoritesJapan-suggested';
+      const carouselContainer = document.createElement('div');
+      carouselContainer.id = suggestedId;
+      carouselWrapper.appendChild(carouselContainer);
+
+      // Ocultar todos los carruseles originales para que sólo se vea la sugerencia
+      document.querySelectorAll('.carousel-wrapper').forEach(el => {
+        if (!el.closest('#suggested-carousel-wrapper')) el.style.display = 'none';
+        const prev = el.previousElementSibling;
+        if (prev && prev.tagName === 'H2') prev.style.display = 'none';
+      });
+
+      renderCarousel(
+        'Favoritas de Japón',
+        (window.G_carousels?.favoritesJapan) || [],
+        suggestedId,
+        'favoritesJapan'
+      );
+
+      setupCarouselButtonsSingle(carouselWrapper);
+      return;
+    } else {
+      // Modo filtros (sin búsqueda): no mostrar sugerencia; mostrar la grilla
+      // (vacía) y un mensaje localizado sobre la grilla.
+      document.getElementById('suggested-carousel-wrapper')?.remove();
+      document.querySelectorAll('[id$="-suggested"], [id$="-wrapper-suggested"]').forEach(el => el.remove());
+
+      // Asegurar que la sección principal exista
+      if (!allMoviesGrid) {
+        const mainEl = document.querySelector('main');
+        const aboutEl = document.getElementById('about-section');
+        if (window._allMoviesSectionHtml) {
+          if (aboutEl) aboutEl.insertAdjacentHTML('beforebegin', window._allMoviesSectionHtml);
+          else if (mainEl) mainEl.insertAdjacentHTML('beforeend', window._allMoviesSectionHtml);
+        } else if (mainEl) {
+          const sec = document.createElement('section');
+          sec.id = 'all-movies';
+          sec.innerHTML = '<h2>Todas las películas</h2><div id="movies-grid" class="movies-grid"></div><div id="movies-pagination" class="pagination"></div>';
+          mainEl.appendChild(sec);
+        }
+        allMoviesGrid = document.getElementById('all-movies');
+      }
+
+      // Insertar mensaje de no resultados encima de la grilla
+      const prevNo = document.getElementById('no-results-message');
+      if (!prevNo) {
+        const msg2 = document.createElement('div');
+        msg2.id = 'no-results-message';
+        msg2.style.color = '#ff4b4b';
+        msg2.style.fontSize = '1.2rem';
+        msg2.style.margin = '0 0 1rem 0';
+        msg2.style.textAlign = 'center';
+        msg2.textContent = 'No se encontraron resultados para los filtros aplicados.';
+        allMoviesGrid.parentElement.insertBefore(msg2, allMoviesGrid);
+      }
+
+      // Mostrar grilla (vacía)
+      renderAllMovies._overrideList = filtered; // lista vacía
+      renderAllMovies(1);
+      // continuar con la ejecución normal (no return) para que el bloque "hay resultados"
+      // no se ejecute (filtersActive seguirá true pero aquí ya renderizamos)
+      return;
     }
-  } else {
-    suggestionWrapper.innerHTML = '';
-    suggestionWrapper.style.display = 'flex';
   }
-
-  // Ahora que la sugerencia está en el DOM, eliminar la sección de "Todas las películas"
-  if (allMoviesGrid) {
-    // Guardar HTML original para poder restaurarlo luego
-    if (!window._allMoviesSectionHtml) window._allMoviesSectionHtml = allMoviesGrid.outerHTML;
-    allMoviesGrid.remove();
-  }
-  // Quitar también el título asociado si existiera como elemento separado
-  if (allMoviesTitle) allMoviesTitle.remove();
-
-  // --- Mensaje ---
-  const msg = document.createElement('div');
-  msg.id = 'no-results-message';
-  msg.style.color = '#ff4b4b';
-  msg.style.fontSize = '1.5rem';
-  msg.style.margin = '0 0 1.5rem 0';
-  msg.style.textAlign = 'center';
-  msg.innerHTML = `No encontré resultados. ¿Qué tal ver <strong>Terror Coreano</strong> mientras tanto?`;
-  suggestionWrapper.appendChild(msg);
-
-  // --- Contenedor independiente para el carrusel ---
-  const carouselWrapper = document.createElement('div');
-  carouselWrapper.id = 'carousel-koreanHorror-wrapper-suggested';
-  carouselWrapper.className = 'carousel-wrapper';
-  suggestionWrapper.appendChild(carouselWrapper);
-
-  // Crear un div con id único para evitar duplicados con el carrusel original
-  const suggestedId = 'carousel-koreanHorror-suggested';
-  const carouselContainer = document.createElement('div');
-  carouselContainer.id = suggestedId;
-  carouselWrapper.appendChild(carouselContainer);
-
-  // Ocultar todos los carruseles originales para que sólo se vea la sugerencia
-  document.querySelectorAll('.carousel-wrapper').forEach(el => {
-    if (!el.closest('#suggested-carousel-wrapper')) el.style.display = 'none';
-    const prev = el.previousElementSibling;
-    if (prev && prev.tagName === 'H2') prev.style.display = 'none';
-  });
-
-  // Renderizar carrusel dentro de este contenedor limpio (id único)
-  renderCarousel(
-    'Terror Coreano',
-    (window.G_carousels?.koreanHorror) || [],
-    suggestedId
-  );
-
-  // Activar flechas
-  setupCarouselButtonsSingle(carouselWrapper);
-}
 
 
 
@@ -356,19 +400,64 @@ if (filtered.length === 0) {
     if (filtersActive) {
       if (countEl) countEl.innerText = String(filtered.length);
 
-      // Mostrar la grilla paginada con los resultados filtrados (no carrusel)
-      if (allMoviesGrid) allMoviesGrid.style.display = '';
-      if (allMoviesTitle) {
-        allMoviesTitle.style.display = '';
-        allMoviesTitle.textContent = `Aquí tienes los resultados (${filtered.length})`;
+      // Si estamos en modo filtrado y la sección principal fue eliminada
+      // (por ejemplo al no tener resultados previamente), restaurarla
+      // desde la copia guardada en `window._allMoviesSectionHtml`.
+      if (!allMoviesGrid) {
+        const mainEl = document.querySelector('main');
+        const aboutEl = document.getElementById('about-section');
+        if (window._allMoviesSectionHtml) {
+          if (aboutEl) {
+            aboutEl.insertAdjacentHTML('beforebegin', window._allMoviesSectionHtml);
+          } else if (mainEl) {
+            mainEl.insertAdjacentHTML('beforeend', window._allMoviesSectionHtml);
+          }
+          // Re-obtener referencias una vez restorable
+          allMoviesGrid = document.getElementById('all-movies');
+          allMoviesTitle = allMoviesGrid?.previousElementSibling?.tagName === 'H2' ? allMoviesGrid.previousElementSibling : null;
+        }
       }
 
-      // ocultar carruseles originales (excepto sugerido)
+      // Mostrar la grilla paginada con los resultados filtrados (no carrusel)
+      if (allMoviesGrid) allMoviesGrid.style.display = '';
+
+      // Obtener el H2 interno de la sección principal de películas
+      const sectionH2 = document.querySelector('#all-movies h2');
+
+      if (q && filtered.length > 0) {
+        // Modo búsqueda con resultados: ocultar el H2 interno y mostrar
+        // un H2 específico "Resultados de la búsqueda (N)" encima de la grilla.
+        if (sectionH2) sectionH2.style.display = 'none';
+
+        let srTitle = document.getElementById('search-results-title');
+        if (!srTitle) {
+          srTitle = document.createElement('h2');
+          srTitle.id = 'search-results-title';
+          allMoviesGrid.parentElement.insertBefore(srTitle, allMoviesGrid);
+        }
+        srTitle.textContent = `Resultados de la búsqueda (${filtered.length})`;
+        srTitle.style.display = '';
+      } else {
+        // No hay búsqueda activa: eliminar título específico de búsqueda
+        const srTitle = document.getElementById('search-results-title');
+        if (srTitle) srTitle.remove();
+
+        // Mostrar el H2 interno de la sección principal y ajustar su texto
+        if (sectionH2) {
+          sectionH2.style.display = '';
+          if (q) sectionH2.textContent = `Resultados (${filtered.length})`;
+          else sectionH2.textContent = `Aquí tienes los resultados (${filtered.length})`;
+        }
+      }
+
+      // ocultar TODOS los carruseles y sus títulos cuando hay resultados
       document.querySelectorAll('.carousel-wrapper').forEach(el => {
-        if (!el.closest('#suggested-carousel-wrapper')) el.style.display = 'none';
+        el.style.display = 'none';
         const prev = el.previousElementSibling;
         if (prev && prev.tagName === 'H2') prev.style.display = 'none';
       });
+      // eliminar cualquier sugerencia previa para evitar que quede visible
+      document.getElementById('suggested-carousel-wrapper')?.remove();
 
       // Usar la grilla paginada para mostrar los resultados (overrideList)
       renderAllMovies._overrideList = filtered;
@@ -409,13 +498,10 @@ if (filtered.length === 0) {
       const old = document.getElementById('search-results-section');
       if (old) old.remove();
 
-      // Quitar cualquier sugerencia mostrada anteriormente
+      // Quitar cualquier sugerencia mostrada anteriormente (id que terminen en -suggested)
       const suggestedWrap = document.getElementById('suggested-carousel-wrapper');
       if (suggestedWrap) suggestedWrap.remove();
-      const suggestedCarouselWrapper = document.getElementById('carousel-koreanHorror-wrapper-suggested');
-      if (suggestedCarouselWrapper) suggestedCarouselWrapper.remove();
-      const suggestedCarousel = document.getElementById('carousel-koreanHorror-suggested');
-      if (suggestedCarousel) suggestedCarousel.remove();
+      document.querySelectorAll('[id$="-suggested"], [id$="-wrapper-suggested"]').forEach(el => el.remove());
 
       // Restaurar visibilidad de los carruseles originales y sus títulos
       document.querySelectorAll('.carousel-wrapper').forEach(el => {
