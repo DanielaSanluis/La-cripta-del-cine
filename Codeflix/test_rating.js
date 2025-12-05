@@ -1,15 +1,28 @@
 import http from 'http';
 
-const BASE_URL = 'http://localhost:3000';
-const MOVIE_ID = 1;
+/**
+ * test_rating.js
+ * Script de prueba rápida para validar el endpoint /api/movies/:id/rate
+ * Uso: node test_rating.js  (asegúrate de que el servidor esté corriendo)
+ */
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const MOVIE_ID = Number(process.env.MOVIE_ID || process.argv[2] || 1);
 
+/**
+ * request
+ * Realiza una petición HTTP simple y devuelve un objeto con helpers.
+ * @param {string} url
+ * @param {object} [options]
+ * @param {string|null} [body]
+ * @returns {Promise<{ok:boolean,statusText:string,json:function}>}
+ */
 function request(url, options = {}, body = null) {
     return new Promise((resolve, reject) => {
         const parsedUrl = new URL(url);
         const reqOptions = {
             hostname: parsedUrl.hostname,
-            port: parsedUrl.port,
-            path: parsedUrl.pathname,
+            port: parsedUrl.port || 80,
+            path: parsedUrl.pathname + (parsedUrl.search || ''),
             method: options.method || 'GET',
             headers: options.headers || {}
         };
@@ -25,7 +38,8 @@ function request(url, options = {}, body = null) {
                         json: () => JSON.parse(data)
                     });
                 } catch (e) {
-                    reject(e);
+                    // En caso de que la respuesta no sea JSON
+                    resolve({ ok: res.statusCode >= 200 && res.statusCode < 300, statusText: res.statusMessage, json: async () => { throw e; } });
                 }
             });
         });
@@ -42,7 +56,7 @@ function request(url, options = {}, body = null) {
 async function testRating() {
     try {
         // 1. Get current movie data
-        console.log('Fetching current movie data...');
+        console.log('Fetching current movie data...', BASE_URL, 'movie id', MOVIE_ID);
         const initialRes = await request(`${BASE_URL}/api/movies/${MOVIE_ID}`);
         if (!initialRes.ok) throw new Error(`Failed to fetch movie: ${initialRes.statusText}`);
         const initialMovie = await initialRes.json();
@@ -55,8 +69,8 @@ async function testRating() {
         });
 
         // 2. Calculate expected values
-        const goreCount = initialMovie.gore_count || 1;
-        const scaresCount = initialMovie.scares_count || 1;
+        const goreCount = Number.isFinite(initialMovie.gore_count) ? initialMovie.gore_count : (typeof initialMovie.gore === 'number' ? 1 : 0);
+        const scaresCount = Number.isFinite(initialMovie.scares_count) ? initialMovie.scares_count : (typeof initialMovie.scares === 'number' ? 1 : 0);
 
         const newVote = 5;
 

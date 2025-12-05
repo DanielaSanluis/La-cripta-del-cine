@@ -1,12 +1,28 @@
+/**
+ * movie.js
+ * Script de la página de detalle de película.
+ * Contiene utilidades para fetch, escape, formateo y la lógica para
+ * mostrar el trailer, comentarios y el formulario de rating.
+ */
+
 // ------------------- UTILIDADES -------------------
 
-// Función asíncrona para obtener JSON desde una URL
+/**
+ * fetchJSON
+ * @param {string} url
+ * @returns {Promise<any>}
+ */
 async function fetchJSON(url) {
   const r = await fetch(url);
   return r.json();
 }
 
-// Escapar HTML para evitar inyección
+/**
+ * escapeHtml
+ * Escapa texto para evitar inyección en el DOM.
+ * @param {any} s
+ * @returns {string}
+ */
 function escapeHtml(s) {
   if (!s) return '';
   return String(s)
@@ -17,13 +33,23 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
-// Formatear fecha a legible
+/**
+ * formatDate
+ * Convierte una fecha ISO a una representación legible por humanos.
+ * @param {string|Date} d
+ * @returns {string}
+ */
 function formatDate(d) {
   if (!d) return '';
   try { return new Date(d).toLocaleString(); } catch(e){ return d; }
 }
 
-// Calcular terrorímetro (promedio de 4 métricas)
+/**
+ * computeTerrorimeter
+ * Calcula el valor promedio (0-5) de las métricas principales de la película.
+ * @param {Object} movie
+ * @returns {number}
+ */
 function computeTerrorimeter(movie) {
   const g = Number.isFinite(movie.gore)? Math.min(5,Math.max(0,movie.gore)):0;
   const s = Number.isFinite(movie.scares)? Math.min(5,Math.max(0,movie.scares)):0;
@@ -34,6 +60,11 @@ function computeTerrorimeter(movie) {
 }
 
 // ------------------- COMENTARIOS -------------------
+/**
+ * addComment
+ * Envía un comentario para la película actualmente visualizada.
+ * Requiere que existan los campos #user y #text en el DOM.
+ */
 async function addComment() {
   const user = document.getElementById("user").value.trim();
   const text = document.getElementById("text").value.trim();
@@ -57,6 +88,11 @@ async function addComment() {
 }
 
 // ------------------- RATING -------------------
+/**
+ * showRatingForm
+ * Muestra un modal para que el usuario proteja la evaluación de la película.
+ * @param {Object} movie
+ */
 function showRatingForm(movie){
   if(document.getElementById('rating-modal')) return;
 
@@ -150,12 +186,20 @@ function showRatingForm(movie){
   });
 }
 
+/**
+ * hideRatingForm
+ * Cierra el modal de valoración si existe.
+ */
 function hideRatingForm(){ const m=document.getElementById('rating-modal'); if(m) m.remove(); }
 
 // ------------------- LOAD -------------------
 const params=new URLSearchParams(location.search);
 const id=params.get("id");
 
+/**
+ * load
+ * Carga los datos de la película, renderiza la vista y enlaza eventos.
+ */
 async function load(){
   const movie=await fetchJSON(`/api/movies/${id}`);
   if(!movie){ document.getElementById("movie-container").innerHTML="<p>Película no encontrada</p>"; return; }

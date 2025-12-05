@@ -6,13 +6,23 @@
 // UTILIDADES
 // ================================
 
-// Fetch JSON desde un endpoint
+/**
+ * fetchJSON
+ * Solicita y parsea JSON desde `url`.
+ * @param {string} url - URL a la que hacer fetch
+ * @returns {Promise<any>} - Resultado parseado como objeto/array
+ */
 async function fetchJSON(url) {
   const r = await fetch(url);
   return r.json();
 }
 
-// Escapar texto para HTML (previene inyección)
+/**
+ * escapeHtml
+ * Escapa caracteres especiales para insertar texto en HTML de forma segura.
+ * @param {any} s - Valor a escapar
+ * @returns {string} - Cadena segura para HTML
+ */
 function escapeHtml(s) {
   if (!s) return '';
   return String(s)
@@ -32,6 +42,11 @@ const PAGE_SIZE = 21;
 // ================================
 // CARRUSELES - BOTONES DE SCROLL
 // ================================
+/**
+ * setupCarouselButtonsSingle
+ * Inicializa la navegación (botones, teclado, arrastre) para un carrusel.
+ * @param {HTMLElement} wrapperEl - Wrapper que contiene el track y los botones
+ */
 function setupCarouselButtonsSingle(wrapperEl) {
   if (!wrapperEl) return;
 
@@ -111,6 +126,14 @@ function setupCarouselButtonsSingle(wrapperEl) {
 // ================================
 // RENDER CARRUSELES 
 // ================================
+/**
+ * renderCarousel
+ * Renderiza un carrusel dentro del contenedor indicado.
+ * @param {string} title - Título del carrusel (puede ser vacío)
+ * @param {Array<number>} ids - Lista de ids de películas a mostrar
+ * @param {string} containerId - Id del contenedor donde montar el carrusel
+ * @param {string} [key] - Clave opcional para identificar el carrusel
+ */
 function renderCarousel(title, ids, containerId, key) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -156,6 +179,11 @@ function renderCarousel(title, ids, containerId, key) {
   setupCarouselButtonsSingle(wrapper);
 }
 
+/**
+ * renderSearchCarousel
+ * Construye y muestra un carrusel con los resultados de búsqueda.
+ * @param {Array<Object>} filtered - Lista de películas filtradas
+ */
 function renderSearchCarousel(filtered) {
   const main = document.querySelector('main');
   if (!main) return;
@@ -203,6 +231,10 @@ function renderSearchCarousel(filtered) {
 // ================================
 
 // Construir lista única de tags y renderizar checkboxes
+/**
+ * renderTagsFilter
+ * Construye la lista de filtros por tags basada en `allMovies`.
+ */
 function renderTagsFilter() {
   const tagsEl = document.getElementById('tags-list');
   if (!tagsEl) return;
@@ -235,6 +267,12 @@ function renderTagsFilter() {
 }
 
 // Aplicar filtros de búsqueda, métricas y tags
+/**
+ * applyFilters
+ * Aplica los filtros de búsqueda, métricas y tags sobre `allMovies` y
+ * actualiza la vista (carruseles o grilla paginada) según corresponda.
+ * @param {Event} [e]
+ */
 function applyFilters(e) {
   try {
     const q = (document.getElementById('search')?.value || '').trim().toLowerCase();
@@ -534,6 +572,10 @@ function applyFilters(e) {
 
 
 // Limpiar filtros y restaurar estado inicial
+/**
+ * clearFilters
+ * Restaura el estado inicial de filtros y muestra la vista principal.
+ */
 function clearFilters() {
   if (document.getElementById('search')) document.getElementById('search').value = '';
   ['filter-gore','filter-miedo','filter-jumps','filter-suspense'].forEach(id => {
@@ -585,6 +627,11 @@ function clearFilters() {
 // ================================
 // INICIALIZACIÓN
 // ================================
+/**
+ * init
+ * Punto de entrada del cliente: carga datos, renderiza carruseles y
+ * configura listeners de DOM.
+ */
 async function init() {
   // Animación inicial
   if (typeof window.openCryptDoor === 'function') window.openCryptDoor();
@@ -650,6 +697,8 @@ async function init() {
   if (resultsSummaryElInit) {
     // Reemplazar el contenido por solo el botón (con mismo id para compatibilidad)
     resultsSummaryElInit.innerHTML = '<button id="clear-filters" class="clear-filters">Limpiar filtros</button>';
+    // Ocultar el contenedor inicialmente: el botón se mostrará solo cuando haya filtros/búsqueda activos
+    resultsSummaryElInit.style.display = 'none';
     // Re-attach listener al botón (asegura que siempre funcione aunque hayamos reemplazado el DOM)
     const clearBtn = resultsSummaryElInit.querySelector('#clear-filters');
     if (clearBtn) clearBtn.addEventListener('click', clearFilters);
@@ -660,6 +709,11 @@ async function init() {
 // ================================
 // LISTA DE PELÍCULAS (PAGINADA)
 // ================================
+/**
+ * renderAllMovies
+ * Renderiza la grilla principal paginada.
+ * @param {number} [page=1] - Página a mostrar
+ */
 function renderAllMovies(page = 1) {
   const grid = document.getElementById('movies-grid');
   const pagination = document.getElementById('movies-pagination');
@@ -705,6 +759,11 @@ function renderAllMovies(page = 1) {
 // ================================
 // FUNCIONES AUXILIARES
 // ================================
+/**
+ * openMovie
+ * Navega a la página de detalle de la película.
+ * @param {number|string} id - Identificador de la película
+ */
 function openMovie(id) {
   window.location.href = `movie.html?id=${id}`;
 }

@@ -1,0 +1,136 @@
+% README.tex - Documentación detallada del proyecto CodeFlix
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{tikz}
+\geometry{margin=2.5cm}
+\title{CodeFlix -- Documentación del Proyecto}
+\author{Equipo CodeFlix}
+\date{\today}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+\tableofcontents
+\vspace{1em}
+
+\section{Resumen ejecutivo}
+CodeFlix es una aplicación web ligera que sirve como catálogo de videos/películas con una estructura de datos local basada en JSON. El repositorio incluye un servidor Node.js (archivo \texttt{server.js}), datos de ejemplo en la carpeta \texttt{data/}, assets públicos en \texttt{public/}, scripts utilitarios en \texttt{scripts/} y la interfaz estática en \texttt{src/}.
+
+El objetivo de esta documentación es: (1) describir la arquitectura del proyecto, (2) exponer decisiones de ingeniería de software y buenas prácticas aplicadas o recomendadas, y (3) proporcionar instrucciones claras para ejecutar, mantener y ampliar el sistema.
+
+\section{Estructura del repositorio}
+\begin{longtable}{p{4cm} p{10cm}}
+\textbf{Archivo/Carpeta} & \textbf{Descripción} \\\hline
+\texttt{package.json} & Dependencias y scripts del proyecto (Node.js). \\
+\texttt{server.js} & Servidor HTTP principal (Node/Express o http nativo según implementación). \\
+\texttt{test_rating.js} & Pruebas / scripts para evaluar la puntuación o lógica (archivo de test manual). \\
+\texttt{data/} & Datos de entrada (\texttt{movies.json}, \texttt{carousels.json}, \ldots). \\
+\texttt{public/} & Recursos públicos servidos al cliente (imágenes, videos). \\
+\texttt{scripts/} & Utilidades y scripts de normalización/transformación de datos. \\
+\texttt{src/} & Código front-end (HTML, CSS, JS). \\
+\texttt{README.tex} & Esta documentación. \\
+\end{longtable}
+
+\section{Componentes principales}
+\subsection{Servidor}
+El servidor gestiona rutas estáticas y API mínimas (por ejemplo, servir \texttt{/data/movies.json} o endpoints personalizados). Está pensado para desarrollo local y prototipado.
+
+\subsection{Datos}
+Los datos están en archivos JSON en \texttt{data/}. Estos contienen los catálogos y metadatos de las películas. Existen scripts en \texttt{scripts/} para normalizar o enriquecer dichos JSON.
+
+\subsection{Frontend}
+El código en \texttt{src/} provee las vistas: una página index (catálogo) y una página de detalle (\texttt{movie.html}). Los scripts ubicados en \texttt{src/scripts/} implementan el comportamiento en cliente.
+
+\section{Arquitectura y flujo de datos}
+\subsection{Visión por capas}
+CodeFlix sigue una arquitectura en capas simple y clásica:
+- Capa de datos: archivos JSON en \texttt{data/}. 
+- Capa de servidor: \texttt{server.js} expone datos y sirve los activos. 
+- Capa de presentación: HTML/CSS/JS en \texttt{src/}. 
+
+El flujo básico es: cliente solicita páginas estáticas -> servidor devuelve HTML/CSS/JS -> el JS del cliente solicita los JSON (p. ej. \texttt{/data/movies.json}) -> el cliente renderiza la interfaz.
+
+\subsection{Diagrama (simplificado)}
+\begin{center}
+\begin{tikzpicture}[node distance=2.2cm, auto]
+  \node (browser) [draw, rectangle] {Navegador (UI)};
+  \node (server) [draw, rectangle, right of=browser, node distance=4.5cm] {Servidor Node.js (\texttt{server.js})};
+  \node (data) [draw, rectangle, below of=server] {Datos: \texttt{data/*.json}};
+  \node (public) [draw, rectangle, above of=server] {Assets: \texttt{public/}};
+  \draw[->] (browser) to node {HTTP requests} (server);
+  \draw[->] (server) to node {serve static} (public);
+  \draw[->] (server) to node {read/serve JSON} (data);
+\end{tikzpicture}
+\end{center}
+
+\section{Decisiones de ingeniería de software}
+\subsection{Modularidad y separación de responsabilidades}
+El proyecto está dividido en módulos por responsabilidad: servidor, datos, utilidades y presentación. Esta separación facilita pruebas unitarias, sustitución de la capa de persistencia y despliegue independiente.
+
+\subsection{Patrones sugeridos}
+- API REST simple para exponer recursos (movies, carousels, contacts). 
+- Modelo Controlador (handler) para la lógica de endpoints en \texttt{server.js}. 
+- Scripts de normalización en \texttt{scripts/} para ETL y mantenimiento de datos.
+
+\subsection{Mantenibilidad}
+- Mantener contratos estables en los JSON (campos, tipos) reduce roturas en cliente.
+- Documentar las estructuras de los objetos de datos (p. ej. esquema para una entrada de \texttt{movies.json}).
+
+\subsection{Pruebas y calidad}
+- Integrar un runner de pruebas (Jest / Mocha) para verificar lógica de transformación y rutas.
+- Añadir linting (ESLint) y formateo automático (Prettier) como paso de CI.
+
+\subsection{Escalabilidad y producción}
+- Para producción, reemplazar archivos JSON por una base de datos (SQLite, PostgreSQL o MongoDB) si el volumen crece.
+- Usar un servidor estático (nginx) frente al servidor node para entregar assets y balanceo.
+
+\subsection{Seguridad}
+- Validar y sanitizar cualquier entrada (si se añaden endpoints que reciban datos).
+- Evitar exponer paths de archivos locales si se añaden upload/download.
+
+\section{Instrucciones de desarrollo y ejecución}
+\subsection{Requisitos}
+- Node.js v14+ (recomendado). 
+
+\subsection{Instalación}
+Abrir terminal en la raíz del proyecto y ejecutar:
+\begin{lstlisting}
+npm install
+\end{lstlisting}
+
+\subsection{Ejecución en entorno de desarrollo}
+\begin{lstlisting}
+node server.js
+\end{lstlisting}
+Luego abrir en el navegador \texttt{http://localhost:3000} (o el puerto configurado en \texttt{server.js}).
+
+\section{Documentación del código y tareas realizadas}
+En el repositorio se han añadido comentarios y JSDoc en los puntos de entrada principales (servidor, scripts de normalización y scripts cliente) para facilitar la lectura y el mantenimiento. Mantener comentarios concisos, actualizados y centrados en la intención y contrato de las funciones.
+
+\section{Cómo contribuir}
+- Crea una rama con prefijo \texttt{feature/} o \texttt{fix/}. 
+- Añade tests para cambios lógicos. 
+- Abre un pull request descriptivo y referencia el issue si existe.
+
+\section{Apéndice: Esquema sugerido para \texttt{movies.json}}
+Ejemplo de campos básicos que deben documentarse y mantenerse estables:
+\begin{itemize}
+  \item \texttt{id}: identificador único (string o número)
+  \item \texttt{title}: título de la película (string)
+  \item \texttt{year}: año de lanzamiento (número)
+  \item \texttt{duration}: duración en minutos (número opcional)
+  \item \texttt{tags}: lista de etiquetas/categorías (array de strings)
+  \item \texttt{videoUrl}: ruta o URL del recurso de video (string)
+  \item \texttt{poster}: ruta a la imagen/póster (string)
+\end{itemize}
+
+\section{Contacto}
+Para preguntas o coordinación, abrir un issue en el repositorio o contactar al autor del proyecto.
+
+\end{document}

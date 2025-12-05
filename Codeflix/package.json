@@ -5,7 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node test_rating.js",
+    "normalize": "node scripts/normalize_movies.js",
+    "addfields": "node scripts/add_fields.js"
   },
   "keywords": [
     "cine",

@@ -1,7 +1,15 @@
-import express from "express"; // Importa el framework Express para crear el servidor web
-import fs from "fs"; // Importa el módulo de sistema de ficheros para leer/escribir archivos
-import path from "path"; // Importa el módulo para manejar rutas de archivos
-import { fileURLToPath } from "url"; // Importa util para obtener __filename en ESM
+/**
+ * server.js
+ * Servidor web para CodeFlix - entrega de contenido estático y API REST
+ * - Sirve la UI estática en `src/`
+ * - Expone endpoints JSON para `movies`, `carousels`, `contact` y rating
+ *
+ * Nota: Implementación orientada a prototipado/entorno de desarrollo.
+ */
+import express from "express";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url); // Obtiene la ruta del archivo actual
 const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
@@ -16,143 +24,150 @@ app.use(express.json()); // Permite que Express parsee JSON en el cuerpo de las 
 app.use(express.static(path.join(__dirname, "src"))); // Sirve archivos estáticos desde la carpeta `src`
 
 // Rutas API
-app.get("/api/movies", (req, res) => { // Endpoint para obtener la lista de películas
-  // Leer los datos originales y normalizar para asegurar que cada película
-  // tenga los campos `jumpscares` y `suspense` (por compatibilidad y para
-  // no tener que editar manualmente todo el JSON de datos).
-  const raw = JSON.parse(fs.readFileSync("./data/movies.json")); // Lee y parsea el JSON de películas
-  const data = raw.map(m => ({ // Mapea cada película para garantizar campos nuevos
-    ...m, // Conserva todas las propiedades existentes
-    // `jumpscares`: número de sobresaltos bruscos (por defecto 0 si no existe)
-    jumpscares: typeof m.jumpscares === 'number' ? m.jumpscares : 0, // Añade jumpscares si falta
-    // `suspense`: nivel de suspenso 1-5. Si no existe, usar `scares` cuando está, o 3 por defecto
-    suspense: typeof m.suspense === 'number' ? m.suspense : (typeof m.scares === 'number' ? m.scares : 3) // Normaliza suspense
+/**
+ * GET /api/movies
+ * Devuelve la lista de películas normalizada. Asegura que cada objeto
+ * tenga los campos numéricos `jumpscares` y `suspense` para evitar
+ * inconsistencias en el cliente.
+ */
+app.get("/api/movies", (req, res) => {
+  const raw = JSON.parse(fs.readFileSync("./data/movies.json"));
+  const data = raw.map((m) => ({
+    ...m,
+    jumpscares: typeof m.jumpscares === "number" ? m.jumpscares : 0,
+    suspense:
+      typeof m.suspense === "number"
+        ? m.suspense
+        : typeof m.scares === "number"
+        ? m.scares
+        : 3,
   }));
-  res.json(data); // Devuelve la lista normalizada como JSON
+  res.json(data);
 });
 
-app.get("/api/carousels", (req, res) => { // Endpoint para obtener datos de carousels
-  const data = JSON.parse(fs.readFileSync("./data/carousels.json")); // Lee y parsea carousels.json
-  res.json(data); // Devuelve los carousels como JSON
+/**
+ * GET /api/carousels
+ * Devuelve el contenido del archivo `data/carousels.json` tal cual.
+ */
+app.get("/api/carousels", (req, res) => {
+  const data = JSON.parse(fs.readFileSync("./data/carousels.json"));
+  res.json(data);
 });
 
 // Ruta para obtener una película específica
-app.get("/api/movies/:id", (req, res) => { // Endpoint que devuelve una película por id
-  const data = JSON.parse(fs.readFileSync("./data/movies.json")); // Lee lista completa de películas
-  const m = data.find(m => m.id === parseInt(req.params.id)); // Busca la película por id numérico
+/**
+ * GET /api/movies/:id
+ * Devuelve una película por su identificador. Normaliza los campos numéricos
+ * y retorna 404 si no se encuentra.
+ */
+app.get("/api/movies/:id", (req, res) => {
+  const data = JSON.parse(fs.readFileSync("./data/movies.json"));
+  const m = data.find((m) => m.id === parseInt(req.params.id));
   if (m) {
-    // Normalizar campos nuevos antes de enviar
     const movie = {
-      ...m, // Conserva propiedades existentes
-      jumpscares: typeof m.jumpscares === 'number' ? m.jumpscares : 0, // Asegura jumpscares
-      suspense: typeof m.suspense === 'number' ? m.suspense : (typeof m.scares === 'number' ? m.scares : 3) // Asegura suspense
+      ...m,
+      jumpscares: typeof m.jumpscares === "number" ? m.jumpscares : 0,
+      suspense:
+        typeof m.suspense === "number"
+          ? m.suspense
+          : typeof m.scares === "number"
+          ? m.scares
+          : 3,
     };
-    res.json(movie); // Devuelve la película normalizada
-  } else res.status(404).json({ error: "Película no encontrada" }); // Si no existe, 404
+    res.json(movie);
+  } else res.status(404).json({ error: "Película no encontrada" });
 });
 
 // Añadir comentario a una película (persistente en data/movies.json)
-app.post("/api/movies/:id/comment", (req, res) => { // Endpoint para añadir comentario a una película
+/**
+ * POST /api/movies/:id/comment
+ * Añade un comentario a la película indicada por :id. El cuerpo debe
+ * contener { user, text }. Responde 201 con el comentario creado.
+ */
+app.post("/api/movies/:id/comment", (req, res) => {
   try {
-    const dataPath = path.join(__dirname, "data", "movies.json"); // Ruta absoluta al JSON de películas
-    const data = JSON.parse(fs.readFileSync(dataPath)); // Lee y parsea el JSON
-    const movie = data.find(m => m.id === parseInt(req.params.id)); // Encuentra la película por id
-    if (!movie) return res.status(404).json({ error: "Película no encontrada" }); // 404 si no existe
+    const dataPath = path.join(__dirname, "data", "movies.json");
+    const data = JSON.parse(fs.readFileSync(dataPath));
+    const movie = data.find((m) => m.id === parseInt(req.params.id));
+    if (!movie) return res.status(404).json({ error: "Película no encontrada" });
 
-    const { user, text } = req.body; // Extrae usuario y texto desde el cuerpo
-    if (!user || !text) return res.status(400).json({ error: "Faltan campos" }); // 400 si faltan campos
+    const { user, text } = req.body;
+    if (!user || !text) return res.status(400).json({ error: "Faltan campos" });
 
     const comment = {
-      user: String(user).substring(0, 100), // Sanitiza y limita longitud del usuario
-      text: String(text).substring(0, 1000), // Sanitiza y limita longitud del texto
-      date: new Date().toISOString() // Fecha ISO del comentario
+      user: String(user).substring(0, 100),
+      text: String(text).substring(0, 1000),
+      date: new Date().toISOString(),
     };
 
-    movie.comments = movie.comments || []; // Inicializa array de comentarios si no existe
-    movie.comments.push(comment); // Añade el nuevo comentario
+    movie.comments = movie.comments || [];
+    movie.comments.push(comment);
 
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2)); // Guarda los cambios en el JSON
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-    return res.status(201).json({ success: true, comment }); // Responde con éxito y el comentario
+    return res.status(201).json({ success: true, comment });
   } catch (err) {
-    console.error(err); // Log de error en servidor
-    return res.status(500).json({ error: 'Error al guardar el comentario' }); // 500 si ocurre un error
+    console.error(err);
+    return res.status(500).json({ error: "Error al guardar el comentario" });
   }
 });
 
 // Endpoint para recibir puntuaciones de los 4 elementos (gore, scares, jumpscares, suspense)
 // Este endpoint actualiza el archivo data/movies.json promediando los valores actuales
 // con los recibidos por el cliente.
-app.post('/api/movies/:id/rate', (req, res) => { // Endpoint para registrar una valoración por película
+/**
+ * POST /api/movies/:id/rate
+ * Recibe un payload con { gore, scares, jumpscares, suspense } (números 0-5)
+ * y actualiza los promedios de la película persistiendo en el JSON.
+ */
+app.post("/api/movies/:id/rate", (req, res) => {
   try {
-    const dataPath = path.join(__dirname, 'data', 'movies.json'); // Ruta a movies.json
-    const data = JSON.parse(fs.readFileSync(dataPath)); // Lee y parsea el JSON
-    const movieIndex = data.findIndex(m => m.id === parseInt(req.params.id)); // Índice de la película
-    if (movieIndex === -1) return res.status(404).json({ error: 'Película no encontrada' }); // 404 si no existe
+    const dataPath = path.join(__dirname, "data", "movies.json");
+    const data = JSON.parse(fs.readFileSync(dataPath));
+    const movieIndex = data.findIndex((m) => m.id === parseInt(req.params.id));
+    if (movieIndex === -1) return res.status(404).json({ error: "Película no encontrada" });
 
-    const { gore, scares, jumpscares, suspense } = req.body; // Extrae las métricas del cuerpo
-    // Validación básica: deben ser números entre 0 y 5
-    const vals = { gore, scares, jumpscares, suspense }; // Objeto con los valores recibidos
+    const { gore, scares, jumpscares, suspense } = req.body;
+    const vals = { gore, scares, jumpscares, suspense };
     for (const k of Object.keys(vals)) {
-      if (typeof vals[k] !== 'number' || vals[k] < 0 || vals[k] > 5) {
-        return res.status(400).json({ error: `Campo inválido: ${k}` }); // 400 si un valor no está en rango
+      if (typeof vals[k] !== "number" || vals[k] < 0 || vals[k] > 5) {
+        return res.status(400).json({ error: `Campo inválido: ${k}` });
       }
     }
 
-    const movie = data[movieIndex]; // La película que se va a actualizar
-    // Asegurar que los campos existen y son números
-    const curGore = typeof movie.gore === 'number' ? movie.gore : 0; // Valor actual gore o 0
-    const curScares = typeof movie.scares === 'number' ? movie.scares : 0; // Valor actual scares o 0
-    const curJumps = typeof movie.jumpscares === 'number' ? movie.jumpscares : 0; // Valor actual jumpscares o 0
-    const curSusp = typeof movie.suspense === 'number' ? movie.suspense : (typeof movie.scares === 'number' ? movie.scares : 3); // Suspense actual o fallback
+    const movie = data[movieIndex];
+    const curGore = typeof movie.gore === "number" ? movie.gore : 0;
+    const curScares = typeof movie.scares === "number" ? movie.scares : 0;
+    const curJumps = typeof movie.jumpscares === "number" ? movie.jumpscares : 0;
+    const curSusp = typeof movie.suspense === "number" ? movie.suspense : typeof movie.scares === "number" ? movie.scares : 3;
 
-    // Obtener contadores actuales (si no existen, asumir 1 voto inicial)
-    // Si el contador existe, úsalo. Si no existe pero hay un valor
-    // numérico para la métrica, asumimos que existe 1 voto previo.
-    // Si no hay dato previo, el contador comienza en 0.
-    let goreCount = typeof movie.gore_count === 'number'
-      ? movie.gore_count
-      : (typeof movie.gore === 'number' ? 1 : 0); // Contador de votos gore
-    let scaresCount = typeof movie.scares_count === 'number'
-      ? movie.scares_count
-      : (typeof movie.scares === 'number' ? 1 : 0); // Contador de votos scares
-    let jumpsCount = typeof movie.jumps_count === 'number'
-      ? movie.jumps_count
-      : (typeof movie.jumpscares === 'number' ? 1 : 0); // Contador de jumpscares
-    let suspCount = typeof movie.suspense_count === 'number'
-      ? movie.suspense_count
-      : (typeof movie.suspense === 'number' ? 1 : 0); // Contador de suspense
+    let goreCount = typeof movie.gore_count === "number" ? movie.gore_count : typeof movie.gore === "number" ? 1 : 0;
+    let scaresCount = typeof movie.scares_count === "number" ? movie.scares_count : typeof movie.scares === "number" ? 1 : 0;
+    let jumpsCount = typeof movie.jumps_count === "number" ? movie.jumps_count : typeof movie.jumpscares === "number" ? 1 : 0;
+    let suspCount = typeof movie.suspense_count === "number" ? movie.suspense_count : typeof movie.suspense === "number" ? 1 : 0;
 
-    // Calcular nuevos promedios ponderados
-    // Fórmula: ((PromedioActual * VotosActuales) + NuevoVoto) / (VotosActuales + 1)
+    const newGore = ((curGore * goreCount) + gore) / (goreCount + 1);
+    movie.gore = parseFloat(newGore.toFixed(1));
+    movie.gore_count = goreCount + 1;
 
-    // Gore
-    const newGore = ((curGore * goreCount) + gore) / (goreCount + 1); // Nuevo promedio gore
-    movie.gore = parseFloat(newGore.toFixed(1)); // Redondea gore a 1 decimal
-    movie.gore_count = goreCount + 1; // Incrementa contador gore
+    const newScares = ((curScares * scaresCount) + scares) / (scaresCount + 1);
+    movie.scares = parseFloat(newScares.toFixed(1));
+    movie.scares_count = scaresCount + 1;
 
-    // Scares
-    const newScares = ((curScares * scaresCount) + scares) / (scaresCount + 1); // Nuevo promedio scares
-    movie.scares = parseFloat(newScares.toFixed(1)); // Redondea scares
-    movie.scares_count = scaresCount + 1; // Incrementa contador scares
+    const newJumps = ((curJumps * jumpsCount) + jumpscares) / (jumpsCount + 1);
+    movie.jumpscares = parseFloat(newJumps.toFixed(1));
+    movie.jumps_count = jumpsCount + 1;
 
-    // Jumpscares
-    const newJumps = ((curJumps * jumpsCount) + jumpscares) / (jumpsCount + 1); // Nuevo promedio jumpscares
-    movie.jumpscares = parseFloat(newJumps.toFixed(1)); // Redondea jumpscares
-    movie.jumps_count = jumpsCount + 1; // Incrementa contador jumpscares
+    const newSusp = ((curSusp * suspCount) + suspense) / (suspCount + 1);
+    movie.suspense = parseFloat(newSusp.toFixed(1));
+    movie.suspense_count = suspCount + 1;
 
-    // Suspense
-    const newSusp = ((curSusp * suspCount) + suspense) / (suspCount + 1); // Nuevo promedio suspense
-    movie.suspense = parseFloat(newSusp.toFixed(1)); // Redondea suspense
-    movie.suspense_count = suspCount + 1; // Incrementa contador suspense
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-    // Guardar cambios
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2)); // Escribe los cambios en el archivo
-
-    return res.json({ success: true, movie }); // Responde con la película actualizada
+    return res.json({ success: true, movie });
   } catch (err) {
-    console.error(err); // Log en caso de error
-    return res.status(500).json({ error: 'Error al procesar la puntuación' }); // Responde 500 en error
+    console.error(err);
+    return res.status(500).json({ error: "Error al procesar la puntuación" });
   }
 });
 
