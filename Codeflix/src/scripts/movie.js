@@ -286,11 +286,38 @@ async function load(){
       document.body.appendChild(overlay);
 
       const content=document.getElementById('trailer-content');
-      let keyHandler=(e)=>{ if(e.key==='Escape') closeModal(); };
-      function closeModal(){ const m=document.getElementById('trailer-modal'); if(m){ const v=m.querySelector('video'); if(v&&!v.paused) try{v.pause();v.currentTime=0;}catch(e){} m.remove(); } delete showTrailerBtn.dataset.clicked; document.removeEventListener('keydown',keyHandler); }
+      let showRatingOnClose = false;
 
-      document.getElementById('trailer-close').addEventListener('click',closeModal);
-      document.addEventListener('keydown',keyHandler);
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') closeModal();
+      };
+
+      function closeModal() {
+        const m = document.getElementById('trailer-modal');
+        if (m) {
+          const v = m.querySelector('video');
+          if (v && !v.paused) {
+            try {
+              v.pause();
+              v.currentTime = 0;
+            } catch (e) {}
+          }
+          m.remove();
+        }
+        delete showTrailerBtn.dataset.clicked;
+        document.removeEventListener('keydown', keyHandler);
+
+        // Solo para ciertos casos (YouTube) mostraremos la ventana de calificación
+        if (showRatingOnClose) {
+          showRatingForm(movie);
+          showRatingOnClose = false;
+        }
+      }
+
+      document
+        .getElementById('trailer-close')
+        .addEventListener('click', () => closeModal());
+      document.addEventListener('keydown', keyHandler);
 
       if(movie.trailer){
         if(movie.trailer.type==='local'){
@@ -301,7 +328,9 @@ async function load(){
           v.addEventListener('ended',()=>{ closeModal(); showRatingForm(movie); });
         }
         else if(movie.trailer.type==='youtube'){
-          //Trailers de YouTube
+        //Trailers de YouTube
+        // Activar flag: cuando se cierre este modal (✕ o ESC), mostrar rating
+        showRatingOnClose = true;
         // Añadimos autoplay para permitir reproducción automática
         const autoplayUrl = movie.trailer.url.includes("?")
           ? movie.trailer.url + "&autoplay=1" //Ponerlo asi: "&autoplay=1&mute=1" en caso de que el navegaro bloquee el video
