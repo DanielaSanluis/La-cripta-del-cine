@@ -21,6 +21,7 @@ const PORT = 3000; // Puerto donde correrá el servidor
 app.use(express.json()); // Permite que Express parsee JSON en el cuerpo de las peticiones
 
 // 👇 Aquí está el cambio importante
+app.use(express.static(path.join(__dirname, "public")));// Sirve archivos estáticos desde la carpeta `public`
 app.use(express.static(path.join(__dirname, "src"))); // Sirve archivos estáticos desde la carpeta `src`
 
 // Rutas API
